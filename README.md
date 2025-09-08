@@ -1,47 +1,147 @@
+Here you go — a polished, GitHub-ready README that merges your two writeups into one cohesive document and keeps everything clearly **educational-only**.
+
+---
+
 # RET Academy 🔥
 
 **Interactive Reverse Engineering & Assembly Learning Platform**
 
-A comprehensive web-based educational platform for learning reverse engineering, assembly language, and binary analysis. Built for cybersecurity students, malware researchers, and anyone interested in low-level system analysis.
+A comprehensive, browser-based platform for learning reverse engineering, assembly, and binary analysis — built for cybersecurity students, malware researchers, and anyone curious about low-level systems.
 
-## 🚀 Features
+[![Status](https://img.shields.io/badge/status-active-brightgreen)](./)
+[![License](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
+[![Made with](https://img.shields.io/badge/made%20with-HTML5%2FCSS3%2FJS-black)](./)
+[![Educational](https://img.shields.io/badge/purpose-educational-orange)](./)
 
-### Core Modules
-- **🔬 Disassembly Viewer** - Interactive assembly code analysis with syntax highlighting
-- **📄 Source Code Tab** - View and compare C/C++ source with assembly output  
-- **🗃️ Hex Editor** - Binary analysis with pattern detection and entropy calculation
-- **🔤 String Analysis** - Extract and analyze string literals from binaries
-- **🌊 Control Flow Graph** - Visual program flow representation
-- **📚 Interactive Lessons** - Hands-on tutorials with gamification
-- **📊 Statistics & Achievements** - Track learning progress
-- **🎓 Concepts Visualizer** - Memory layout and system concepts
-- **⚡ System Calls Reference** - Comprehensive Linux/Windows syscall database
+---
 
-### Educational Content
-- **Progressive Learning Path** - From basics to advanced exploitation
-- **Real Code Examples** - Practical assembly and C code samples
-- **Interactive Challenges** - Hands-on reverse engineering tasks
-- **Memory Visualization** - Stack, heap, and memory layout diagrams
-- **Syscall Playground** - Generate and test shellcode
+## ✨ Why RET Academy?
 
-## 🛠️ Technology Stack
+* 100% client-side (no backend, no installs)
+* Built for clarity: visualizations, step-through execution, and hands-on challenges
+* Practical focus: from assembly basics to real-world RE workflows
 
-- **Frontend**: Pure HTML5, CSS3, JavaScript (ES6 modules)
-- **Architecture**: Modular component-based design
-- **Styling**: Custom CSS with dark cyberpunk theme
-- **Data**: JSON-based lesson and syscall databases
-- **Compatibility**: Modern browsers (Chrome, Firefox, Safari, Edge)
+---
 
-## 📦 Quick Start
+## 🚀 Core Features
 
-### Option 1: Direct Browser
+### Analysis & Tools
+
+* **🔬 Disassembly Viewer** — interactive asm with syntax highlighting
+* **📄 Source ↔ Assembly Diff** — compare C/C++ and compiler output
+* **🗃️ Hex Editor** — pattern detection & entropy hints
+* **🔤 String Analysis** — extract & inspect literals quickly
+* **🌊 Control Flow Graph** — visualize program flow
+* **⚡ System Calls Reference** — Linux/Windows syscall database (searchable)
+* **🎓 Concepts Visualizer** — memory layout, calling conventions, and ABI concepts
+
+### Learning Experience
+
+* **📚 Interactive Lessons** — progressive path from fundamentals to advanced
+* **🎮 Challenges** — practical reverse-engineering tasks
+* **🧠 Memory Visualizer** — stack/heap diagrams & live register views
+* **🏅 Progress & Achievements** — track completion and milestones
+
+---
+
+## 🧪 Built-In: *Hacker Lab v2.0* (Interactive Simulator)
+
+A fully sandboxed, pwndbg-style RE terminal in your browser — **no real code executes**; everything is simulated and safe.
+
+**Highlights**
+
+* Real-time views: **registers, stack, flags, disassembly, CFG**
+* Step execution: **F10** (step), **F9** (continue)
+* Terminal commands with inline guidance and goals
+* Offline by design; progress saved to `localStorage`
+
+**Hotkeys**
+
+* **F10** — step (`si`)
+* **F9** — continue (`c`)
+* **/** — focus terminal
+
+**Terminal Commands**
+
+```
+help            # help overview
+levels          # list lessons
+load <id>       # load lesson (e.g. load 0.1)
+si              # step instruction
+c               # continue
+break <addr>    # set breakpoint
+del <addr>      # remove breakpoint
+bps             # list breakpoints
+regs            # show registers
+stack           # show stack
+flags           # show flags
+goal            # lesson goal
+hint            # hint for current lesson
+explain         # full explanation
+flow            # toggle Control Flow Graph
+check           # validate lesson completion
+reset           # reset current lesson
+```
+
+---
+
+## 🧭 Curriculum Overview
+
+### Module 0 — Orientation
+
+* **0.1** Hello, World — UI & basics
+* **0.2** MOV & ADD — first instructions
+* **0.3** Memory — addressing & loads/stores
+
+### Module 1 — Control & Data
+
+* **1.1** Conditionals — flags & branches
+* **1.2** Loops — counters & patterns
+* **1.3** `strlen` — strings & termination
+* **1.4** Checksum — accumulation idioms
+* **1.5** Switch — jump tables & dispatch
+
+### Module 2 — Advanced
+
+* **2.1** Calling Conventions — SysV/Win64
+* **2.2** PLT/GOT — dynamic linking
+* **2.3** Stack Canary — stack hardening
+* **2.4** Compiler Idioms — common patterns
+* **2.5** XOR Crackme — simple protection
+
+---
+
+## 💻 System Calls Database
+
+* **Linux x64** — curated set with signatures & examples
+* **Windows x64 (Native API)** — `Nt*` references
+* **Playground** — generate pseudo-shellcode snippets (simulated)
+* **Context** — usage notes and pitfalls
+
+---
+
+## 🛠 Tech Stack
+
+* **Frontend:** HTML5, CSS3, JavaScript (ES6 modules, no frameworks)
+* **Architecture:** Modular, component-based
+* **Styling:** Custom CSS, dark cyberpunk theme
+* **Data:** JSON (lessons, syscall DB)
+* **Compatibility:** Chrome / Firefox / Safari / Edge (modern versions)
+
+---
+
+## ⚡ Quick Start
+
+### Option 1 — Open directly in the browser
+
 ```bash
 git clone https://github.com/m4rba4s/RET-Academy.git
 cd RET-Academy
 # Open index.html in your browser
 ```
 
-### Option 2: Local Server (Recommended)
+### Option 2 — Local static server (recommended)
+
 ```bash
 git clone https://github.com/m4rba4s/RET-Academy.git
 cd RET-Academy
@@ -49,267 +149,135 @@ cd RET-Academy
 # Python 3
 python -m http.server 8000
 
-# Node.js
+# or Node.js
 npx http-server
 
-# Then visit http://localhost:8000
+# then visit
+http://localhost:8000
 ```
 
-## 🎯 Learning Modules
+---
 
-### 1. Assembly Fundamentals
-- x86-64 instruction set
-- Register usage and calling conventions
-- Memory addressing modes
-- Basic arithmetic and logic operations
-
-### 2. Reverse Engineering Basics
-- Static vs dynamic analysis
-- Tool usage (disassemblers, debuggers)
-- Binary file formats (ELF, PE)
-- String and pattern analysis
-
-### 3. Memory Management
-- Stack and heap organization
-- Buffer overflows and exploitation
-- Memory protection mechanisms
-- Address space layout
-
-### 4. System Programming
-- System call interfaces
-- Inter-process communication
-- File system operations
-- Network programming
-
-### 5. Advanced Topics
-- Anti-debugging techniques
-- Code obfuscation and packing
-- Function hooking and injection
-- Exploit development
-
-## 💻 System Calls Database
-
-Comprehensive reference covering:
-- **Linux x64**: 30+ syscalls with examples
-- **Windows x64**: Native API calls (Nt* functions)
-- **Interactive playground**: Generate custom shellcode
-- **Real examples**: Practical usage scenarios
-
-## 🎨 User Interface
-
-- **Dark Theme**: Cyberpunk-inspired design optimized for long coding sessions
-- **Responsive Layout**: Works on desktop, tablet, and mobile devices
-- **Syntax Highlighting**: Assembly, C/C++, and hex data visualization
-- **Interactive Elements**: Click, hover, and drag interactions
-- **Progress Tracking**: Visual feedback and achievement system
-
-## 🔧 Architecture
+## 🧩 Project Structure
 
 ```
 RET-Academy/
-├── assets/
-│   ├── css/           # Modular stylesheets
-│   ├── js/
-│   │   ├── core/      # Core application logic
-│   │   ├── ui/        # UI components
-│   │   └── data/      # Lesson and syscall data
-│   └── img/           # Images and icons
-├── index.html         # Main application entry point
-└── README.md
+├─ assets/
+│  ├─ css/          # Modular styles
+│  ├─ js/
+│  │  ├─ core/      # App logic (state, engine, simulator)
+│  │  ├─ ui/        # UI components (views, widgets, CFG)
+│  │  └─ data/      # Lessons & syscall JSON
+│  └─ img/          # Icons & illustrations
+├─ index.html        # Main entry
+└─ README.md
 ```
-
-## 🤝 Contributing
-
-We welcome contributions! Areas where help is needed:
-
-- **Content**: Additional lessons and challenges
-- **Features**: New analysis tools and visualizations  
-- **Translations**: Multi-language support
-- **Testing**: Browser compatibility and bug reports
-- **Documentation**: Tutorials and guides
-
-### Development Setup
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-## 📖 Documentation
-
-- **User Guide**: Complete feature documentation
-- **Developer Guide**: Architecture and API reference
-- **Lesson Creation**: How to add new educational content
-- **Customization**: Theming and configuration options
-
-## 🎓 Educational Goals
-
-**RET Academy** aims to:
-- Demystify low-level system programming
-- Provide hands-on cybersecurity education
-- Bridge theory and practical application
-- Create an inclusive learning environment
-- Prepare students for real-world security challenges
-
-## 🔒 Security Note
-
-This platform is designed for **educational purposes only**. All examples and techniques should be used responsibly and only on systems you own or have explicit permission to analyze.
-
-## 📄 License
-
-MIT License - See LICENSE file for details
-
-## 🙏 Acknowledgments
-
-- Assembly syntax highlighting inspired by various open-source projects
-- Educational content structured around industry best practices
-- UI/UX influenced by modern development environments
-- Community feedback and contributions
 
 ---
 
-**Built with ❤️ for the cybersecurity and reverse engineering community**
+## 🧱 Adding a New Lesson
 
-For questions, issues, or contributions, please visit our [GitHub repository](https://github.com/m4rba4s/RET-Academy) or open an issue.
+Edit the `Lessons` object in your lesson bundle (JS). Minimal shape:
 
-# 🚀 Hacker Lab v2.0 - Interactive Assembly & Reverse Engineering
-
-Интерактивная лаборатория для изучения ассемблера и реверс-инжиниринга в браузере. Полностью автономная, безопасная и готовая к использованию без установки.
-
-## 🎯 Особенности
-
-- **Понятные объяснения** - каждый урок содержит детальное объяснение простым языком
-- **13 интерактивных уроков** от новичка до продвинутого уровня - полный курс завершен!
-- **pwndbg-style терминал** с полным набором команд отладчика
-- **Темная хакерская эстетика** с неоновыми акцентами
-- **Пошаговые комментарии** - каждый шаг выполнения объясняется в терминале
-- **Визуализация в реальном времени**: регистры, стек, флаги, дизассемблер
-- **Безопасность**: только симуляция, без выполнения реального кода
-- **Офлайн работа**: никаких внешних зависимостей
-- **Прогресс**: автоматическое сохранение и экспорт
-
-## 🚀 Быстрый старт
-
-1. Открой `hacker_lab.html` в любом современном браузере
-2. Никакой установки или сервера не требуется!
-3. Используй `F10` для шага, `F9` для продолжения
-4. Набери `help` в терминале для списка команд
-
-## 🎮 Управление
-
-### Горячие клавиши
-- **F10** - Шаг (si)
-- **F9** - Продолжить (c)  
-- **/** - Фокус на терминал
-
-### Команды терминала
-```
-help          - Показать справку
-levels        - Список всех уроков
-load <id>     - Загрузить урок (например: load 0.1)
-si            - Шаг (step instruction)
-c             - Продолжить (continue)
-break <addr>  - Поставить брейкпоинт
-del <addr>    - Убрать брейкпоинт
-bps           - Показать все брейкпоинты
-regs          - Показать регистры
-stack         - Показать стек
-flags         - Показать флаги
-goal          - Показать цель урока
-hint          - Показать подсказку
-explain       - Показать подробное объяснение урока
-flow          - Переключиться на Control Flow Graph
-check         - Проверить выполнение урока
-reset         - Сбросить текущий урок
-```
-
-## 📚 Структура курса
-
-### Module 0: Orientation (Ориентация)
-- **0.1** Hello, World - знакомство с интерфейсом
-- **0.2** MOV & ADD - базовые инструкции
-- **0.3** Memory - работа с памятью
-
-### Module 1: Control & Data (Управление и данные)  
-- **1.1** Conditionals - условные переходы
-- **1.2** Loops - циклы
-- **1.3** strlen - работа со строками
-- **1.4** Checksum - суммирование
-- **1.5** Switch - таблицы переходов
-
-### Module 2: Advanced (Продвинутый)
-- **2.1** Calling Convention - соглашения о вызовах
-- **2.2** PLT/GOT - динамическая линковка
-- **2.3** Stack Canary - защита стека
-- **2.4** Compiler - идиомы компилятора
-- **2.5** XOR Crackme - простая защита
-
-## 🛠️ Расширение
-
-### Добавление нового урока
-
-Отредактируй объект `Lessons` в HTML файле:
-
-```javascript
+```js
 'X.Y': {
-    id: 'X.Y',
-    title: 'Название урока',
-    goal: 'Описание цели',
-    hint: 'Подсказка',
-    base: 0x401000,
-    disasm: [
-        { a: 0x401000, b: '55', s: 'push rbp' },
-        // ... остальные инструкции
-    ],
-    trace: [
-        { ip: 0, regs: { rax: 0x10n } },
-        // ... состояния после каждого шага
-    ],
-    check: state => state.regs.rax === 0x37n // условие успеха
+  id: 'X.Y',
+  title: 'Lesson Title',
+  goal: 'What the learner must achieve',
+  hint: 'A helpful hint',
+  base: 0x401000,             // display base for disasm
+  disasm: [
+    { a: 0x401000, b: '55', s: 'push rbp' },
+    // ...
+  ],
+  trace: [
+    { ip: 0, regs: { rax: 0x10n } },
+    // ... post-step states
+  ],
+  check: (state) => state.regs.rax === 0x37n // success condition
 }
 ```
 
-### Структура trace
-- `ip` - индекс инструкции в массиве disasm
-- `regs` - изменения регистров (используй BigInt для 64-битных значений)
-- `flags` - изменения флагов (zf, sf, of, cf)
-- `stack` - состояние стека (массив значений)
+**Trace fields**
 
-## 🔒 Безопасность
-
-- Полная песочница - никакого выполнения реального кода
-- Только симуляция на основе заранее записанных трассировок
-- Все данные локальные, никаких сетевых запросов
-- Образовательные цели - никаких вредоносных примеров
-
-## 📊 Прогресс и данные
-
-- Прогресс сохраняется в `localStorage`
-- Кнопка "Export Progress" для создания резервной копии
-- Формат: JSON с отметками о завершенных уроках
-
-## 🎨 Технические детали
-
-- Vanilla JavaScript (ES2020+)
-- CSS Grid/Flexbox для адаптивной верстки
-- Одностраничное приложение без зависимостей
-- Размер файла: ~35KB (сжатый HTML+CSS+JS)
-- Совместимость: Chrome 90+, Firefox 90+, Safari 14+
-
-## 🤝 Вклад в проект
-
-Хочешь добавить новые уроки или улучшить функциональность?
-1. Форкни проект  
-2. Добавь свои уроки в объект `Lessons`
-3. Протестируй в браузере
-4. Создай pull request
-
-## 📜 Лицензия
-
-Только для образовательных целей. Не используй для анализа вредоносного ПО или других незаконных действий.
+* `ip` — index into the `disasm` array
+* `regs` — register deltas (`BigInt` for 64-bit)
+* `flags` — `zf/sf/of/cf` changes
+* `stack` — array snapshot (optional)
 
 ---
 
-**Приятного хакинга!** 🔥#   H a c k e r - L a b 
- 
- 
+## 🧭 Roadmap
+
+* More platform lessons (ARM64, RISC-V idioms)
+* Deeper CFG interactions (path constraints, summaries)
+* Exportable “lesson packs” & translations
+* Accessibility polish (reduced motion, high-contrast)
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions!
+
+**You can help with:**
+
+* **Content:** new lessons & challenges
+* **Features:** analysis tools, visualizations, UI/UX
+* **Translations:** multi-language content
+* **Testing:** browser compatibility, bug reports
+* **Docs:** tutorials, screenshots, walkthroughs
+
+**Dev Flow**
+
+1. Fork the repo
+2. Create a feature branch
+3. Implement & test locally
+4. Open a pull request with a clear description and screenshots where relevant
+
+---
+
+## 📖 Documentation
+
+* **User Guide:** full feature tour
+* **Developer Guide:** architecture & APIs
+* **Lesson Authoring:** JSON/JS format, tracing model
+* **Customization:** theming and config hooks
+
+---
+
+## 🎨 UI & UX
+
+* **Dark Theme:** cyberpunk-inspired, eye-friendly for long sessions
+* **Responsive:** desktop, tablet, mobile
+* **Syntax Highlighting:** asm, C/C++, hex
+* **Interactive:** click/hover/drag, contextual tips
+* **Progress Tracking:** achievements & completion states
+
+---
+
+## 🔒 Security & Ethics
+
+This project is for **educational purposes only**.
+Use techniques **responsibly** and only on systems you **own** or have **explicit permission** to analyze. No real code is executed by the simulator; all lessons are deterministic and sandboxed.
+
+---
+
+## 📜 License
+
+**MIT** — see [`LICENSE`](./LICENSE).
+
+---
+
+## 🙏 Acknowledgments
+
+* Inspired by open-source RE tooling and teaching approaches
+* Lesson structure aligned with industry best practices
+* UI/UX influenced by modern dev environments
+* Huge thanks to the community for feedback and contributions
+
+---
+
+**Built with ❤️ for the reverse-engineering & cybersecurity community.**
+Questions, ideas, or issues? Open an issue or PR at:
+**[https://github.com/m4rba4s/RET-Academy](https://github.com/m4rba4s/RET-Academy)**
