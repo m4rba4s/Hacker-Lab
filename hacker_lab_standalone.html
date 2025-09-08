@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacker Lab v2 - Standalone Edition</title>
+    <style>
+        /* CSS Variables and Theme */
+        :root {
+            --bg: #0b0f14;
+            --panel: #10161d;
+            --ink: #e6f1ff;
+            --muted: #8aa2b2;
+            --neon: #49f7c2;
+            --accent: #7ea8ff;
+            --ok: #4df3a3;
+            --warn: #ffd36e;
+            --danger: #ff5c7a;
+            --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+            --radius: 12px;
+            --gap: 10px;
+            --shadow: 0 6px 20px rgba(0,0,0,.25);
+        }
+
+        /* Base Styles */
+        * { box-sizing: border-box; }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: var(--mono);
+            background: var(--bg);
+            color: var(--ink);
+            overflow: hidden;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Layout */
+        #app {
+            height: 100vh;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+        }
+
+        #topbar {
+            background: var(--panel);
+            border-bottom: 1px solid #18222e;
+            padding: 8px 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        #workspace {
+            display: grid;
+            grid-template-columns: 280px 1fr 340px;
+            overflow: hidden;
+        }
+
+        #sidebar-left, #sidebar-right {
+            background: var(--panel);
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        #sidebar-left { border-right: 1px solid #18222e; }
+        #sidebar-right { border-left: 1px solid #18222e; }
+
+        #center {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .tabs {
+            display: flex;
+            background: var(--panel);
+            border-bottom: 1px solid #18222e;
+            padding: 0 10px;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            color: var(--muted);
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            color: var(--ink);
+            border-bottom: 2px solid var(--neon);
+        }
+
+        .tab:hover { color: var(--neon); }
+
+        .view-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        #terminal {
+            background: var(--panel);
+            border-top: 1px solid #18222e;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #term-header {
+            padding: 5px 15px;
+            background: rgba(73, 247, 194, 0.1);
+            border-bottom: 1px solid #18222e;
+        }
+
+        #term-body {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            font-size: 13px;
+        }
+
+        #term-input-row {
+            display: flex;
+            padding: 5px 10px;
+            border-top: 1px solid #18222e;
+        }
+
+        #term-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--ink);
+            font-family: var(--mono);
+            font-size: 13px;
+            margin-left: 10px;
+            outline: none;
+        }
+
+        /* Components */
+        .btn {
+            background: var(--panel);
+            color: var(--ink);
+            border: 1px solid var(--muted);
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .btn:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        .lesson-item {
+            padding: 10px;
+            margin: 5px 0;
+            background: rgba(255,255,255,0.05);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lesson-item:hover {
+            background: rgba(73, 247, 194, 0.1);
+            transform: translateX(5px);
+        }
+
+        .lesson-item.active {
+            background: rgba(73, 247, 194, 0.2);
+            border-left: 3px solid var(--neon);
+        }
+
+        .lesson-item.completed {
+            border-left: 3px solid var(--ok);
+        }
+
+        /* Terminal lines */
+        .term-line { margin: 2px 0; }
+        .term-line--success { color: var(--ok); }
+        .term-line--error { color: var(--danger); }
+        .term-line--muted { color: var(--muted); }
+
+        /* Disasm */
+        .disasm-row {
+            display: grid;
+            grid-template-columns: 120px 150px 1fr;
+            padding: 5px;
+            font-size: 13px;
+            transition: all 0.2s ease;
+        }
+
+        .disasm-row:hover {
+            background: rgba(126, 168, 255, 0.1);
+        }
+
+        .disasm-row.is-ip {
+            background: rgba(73, 247, 194, 0.15);
+            border-left: 3px solid var(--neon);
+        }
+
+        /* Registers */
+        .reg-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .reg-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 4px;
+        }
+
+        .reg-item.flash {
+            animation: flash 0.5s ease;
+        }
+
+        @keyframes flash {
+            50% { background: rgba(73, 247, 194, 0.3); }
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: var(--muted);
+        }
+
+        /* Modal */
+        .modal { display: none; }
+        .modal.hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <header id="topbar">
+            <span>🚀 Hacker Lab v2 - Standalone</span>
+            <div style="flex: 1;"></div>
+            <button id="open-qoder" class="btn mini">🤖 Qoder</button>
+        </header>
+        
+        <main id="workspace">
+            <aside id="sidebar-left">
+                <div class="loading">Loading lessons...</div>
+            </aside>
+            
+            <section id="center">
+                <nav class="tabs">
+                    <div class="tab active" data-tab="disasm">Disassembly</div>
+                    <div class="tab" data-tab="source">Source Code</div>
+                    <div class="tab" data-tab="hex">Hex View</div>
+                    <div class="tab" data-tab="strings">Strings</div>
+                    <div class="tab" data-tab="flow">Flow</div>
+                    <div class="tab" data-tab="lesson">Lesson</div>
+                </nav>
+                <div class="view-content">
+                    <div class="loading">Initializing debugger...</div>
+                </div>
+            </section>
+            
+            <aside id="sidebar-right">
+                <div class="loading">Loading registers...</div>
+            </aside>
+        </main>
+        
+        <section id="terminal">
+            <div id="term-header">Terminal - Type 'help' for commands</div>
+            <div id="term-body"></div>
+            <div id="term-input-row">
+                <span id="term-prompt">(hlab)></span>
+                <input type="text" id="term-input" class="caret" placeholder="Type command..." autocomplete="off">
+            </div>
+        </section>
+    </div>
+
+    <div id="qoder-modal" class="modal hidden"></div>
+
+    <script>
+    // 🔥 STANDALONE HACKER LAB v2 🔥
+    // Works without server via file://
+    
+    console.log('🚀 Hacker Lab Standalone starting...');
+
+    // Lessons data embedded
+    const Lessons = [
+        {
+            id: '0.1',
+            title: 'Hello Assembly - First Steps',
+            goal: 'Step through 3 instructions and watch RIP advance',
+            hint: 'Use F10 or "si" command to step through each instruction',
+            disasm: [
+                { a: 0x401000, b: '55', s: 'push rbp' },
+                { a: 0x401001, b: '4889e5', s: 'mov rbp, rsp' },
+                { a: 0x401004, b: 'c3', s: 'ret' }
+            ],
+            trace: [
+                { ip: 0, regs: { rsp: 0x7fffffffe000n, rbp: 0n } },
+                { ip: 1, regs: { rsp: 0x7fffffffdff8n }, stack: [0n] },
+                { ip: 2, regs: { rbp: 0x7fffffffdff8n } }
+            ],
+            check: (state) => state.ipIndex >= 2
+        },
+        {
+            id: '0.2',
+            title: 'MOV & ADD Basics',
+            goal: 'Make RAX equal 0x37 using MOV and ADD',
+            hint: 'MOV copies values, ADD adds them together',
+            disasm: [
+                { a: 0x401000, b: '48c7c010000000', s: 'mov rax, 0x10' },
+                { a: 0x401007, b: '48c7c327000000', s: 'mov rbx, 0x27' },
+                { a: 0x40100e, b: '4801d8', s: 'add rax, rbx' },
+                { a: 0x401011, b: 'c3', s: 'ret' }
+            ],
+            trace: [
+                { ip: 0, regs: { rax: 0n, rbx: 0n } },
+                { ip: 1, regs: { rax: 0x10n } },
+                { ip: 2, regs: { rbx: 0x27n } },
+                { ip: 3, regs: { rax: 0x37n } }
+            ],
+            check: (state) => state.regs.rax === 0x37n
+        }
+    ];
+
+    // State management
+    const State = {
+        currentLesson: null,
+        ipIndex: 0,
+        regs: {
+            rax: 0n, rbx: 0n, rcx: 0n, rdx: 0n,
+            rdi: 0n, rsi: 0n, rbp: 0n, rsp: 0n, rip: 0n
+        },
+        flags: { zf: 0, sf: 0, of: 0, cf: 0 },
+        stack: [],
+        breakpoints: [],
+        
+        loadLesson(lesson) {
+            this.currentLesson = lesson;
+            this.ipIndex = 0;
+            this.regs = {
+                rax: 0n, rbx: 0n, rcx: 0n, rdx: 0n,
+                rdi: 0n, rsi: 0n, rbp: 0n, rsp: 0n, rip: 0n
+            };
+            this.flags = { zf: 0, sf: 0, of: 0, cf: 0 };
+            this.stack = [];
+            
+            if (lesson.trace && lesson.trace[0]) {
+                const init = lesson.trace[0];
+                if (init.regs) Object.assign(this.regs, init.regs);
+                if (init.flags) Object.assign(this.flags, init.flags);
+                if (init.stack) this.stack = [...init.stack];
+            }
+            
+            this.regs.rip = BigInt(lesson.base || 0x401000);
+        },
+        
+        step() {
+            if (!this.currentLesson || !this.currentLesson.trace) return 'no-lesson';
+            if (this.ipIndex >= this.currentLesson.trace.length - 1) return 'end';
+            
+            this.ipIndex++;
+            const step = this.currentLesson.trace[this.ipIndex];
+            
+            if (step.ip !== undefined) this.ipIndex = step.ip;
+            if (step.regs) Object.assign(this.regs, step.regs);
+            if (step.flags) Object.assign(this.flags, step.flags);
+            if (step.stack) this.stack = [...step.stack];
+            
+            const instr = this.currentLesson.disasm[this.ipIndex];
+            if (instr) this.regs.rip = BigInt(instr.a);
+            
+            return 'ok';
+        },
+        
+        formatHex(value) {
+            return '0x' + BigInt(value).toString(16).padStart(16, '0');
+        }
+    };
+
+    // Terminal
+    const Terminal = {
+        body: null,
+        input: null,
+        history: [],
+        historyIndex: -1,
+        
+        init() {
+            this.body = document.getElementById('term-body');
+            this.input = document.getElementById('term-input');
+            
+            this.input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    this.executeCommand(this.input.value.trim());
+                    this.input.value = '';
+                }
+            });
+            
+            // F10 shortcut
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'F10') {
+                    e.preventDefault();
+                    this.executeCommand('si');
+                }
+            });
+            
+            this.print('Welcome to Hacker Lab! Type "help" for available commands.');
+            this.print('Use F10 to step, or type commands directly.');
+            this.print('');
+        },
+        
+        print(text, type = 'normal') {
+            const line = document.createElement('div');
+            line.className = `term-line term-line--${type}`;
+            line.textContent = text;
+            this.body.appendChild(line);
+            this.body.scrollTop = this.body.scrollHeight;
+        },
+        
+        executeCommand(cmd) {
+            if (!cmd) return;
+            
+            this.print(`(hlab)> ${cmd}`, 'muted');
+            const [command, ...args] = cmd.split(/\s+/);
+            
+            const commands = {
+                help: () => {
+                    this.print('Available commands:');
+                    this.print('  help      - Show this help');
+                    this.print('  levels    - List all lessons');
+                    this.print('  load <id> - Load lesson by ID');
+                    this.print('  si        - Step one instruction (F10)');
+                    this.print('  regs      - Show registers');
+                    this.print('  reset     - Reset current lesson');
+                },
+                
+                levels: () => {
+                    this.print('Available lessons:');
+                    Lessons.forEach(lesson => {
+                        this.print(`  ${lesson.id}: ${lesson.title}`);
+                    });
+                },
+                
+                load: (id) => {
+                    if (!id) return this.print('Usage: load <lesson_id>', 'error');
+                    
+                    const lesson = Lessons.find(l => l.id === id);
+                    if (!lesson) return this.print(`Lesson not found: ${id}`, 'error');
+                    
+                    State.loadLesson(lesson);
+                    this.print(`Loaded lesson: ${lesson.title}`, 'success');
+                    updateUI();
+                },
+                
+                si: () => {
+                    const result = State.step();
+                    if (result === 'end') {
+                        this.print('— End of trace —', 'muted');
+                    } else if (result === 'no-lesson') {
+                        this.print('No lesson loaded', 'error');
+                    } else {
+                        this.print(`Step: ${State.formatHex(State.regs.rip)}`);
+                    }
+                    updateUI();
+                },
+                
+                regs: () => {
+                    this.print('Registers:');
+                    Object.entries(State.regs).forEach(([name, value]) => {
+                        this.print(`  ${name.toUpperCase()}: ${State.formatHex(value)}`);
+                    });
+                },
+                
+                reset: () => {
+                    if (!State.currentLesson) {
+                        return this.print('No lesson loaded', 'error');
+                    }
+                    State.loadLesson(State.currentLesson);
+                    this.print('Lesson reset', 'success');
+                    updateUI();
+                }
+            };
+            
+            const handler = commands[command];
+            if (handler) {
+                handler(...args);
+            } else {
+                this.print(`Unknown command: ${command}`, 'error');
+            }
+        }
+    };
+
+    // UI Update
+    function updateUI() {
+        // Update sidebar
+        const sidebar = document.getElementById('sidebar-left');
+        if (sidebar && Lessons.length > 0) {
+            let html = '<h3>Lessons</h3>';
+            Lessons.forEach(lesson => {
+                const isActive = State.currentLesson?.id === lesson.id;
+                html += `<div class="lesson-item ${isActive ? 'active' : ''}" onclick="loadLessonUI('${lesson.id}')">
+                    ${lesson.id}: ${lesson.title}
+                </div>`;
+            });
+            sidebar.innerHTML = html;
+        }
+        
+        // Update disassembly
+        const content = document.querySelector('.view-content');
+        if (content && State.currentLesson) {
+            let html = '<div style="font-family: monospace;">';
+            State.currentLesson.disasm.forEach((instr, i) => {
+                const isIP = i === State.ipIndex;
+                html += `<div class="disasm-row ${isIP ? 'is-ip' : ''}">
+                    <div>${State.formatHex(instr.a)}</div>
+                    <div>${instr.b}</div>
+                    <div>${instr.s}</div>
+                </div>`;
+            });
+            html += '</div>';
+            content.innerHTML = html;
+        }
+        
+        // Update registers
+        const rightBar = document.getElementById('sidebar-right');
+        if (rightBar) {
+            let html = '<h3>Registers</h3><div class="reg-grid">';
+            Object.entries(State.regs).forEach(([name, value]) => {
+                html += `<div class="reg-item">
+                    <span>${name.toUpperCase()}</span>
+                    <span>${State.formatHex(value)}</span>
+                </div>`;
+            });
+            html += '</div>';
+            rightBar.innerHTML = html;
+        }
+    }
+
+    // Load lesson from UI
+    window.loadLessonUI = function(id) {
+        Terminal.executeCommand(`load ${id}`);
+    };
+
+    // Tab switching
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('tab')) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            e.target.classList.add('active');
+            // В полной версии здесь будет переключение контента
+        }
+    });
+
+    // Initialize
+    Terminal.init();
+    updateUI();
+    
+    // Load first lesson automatically
+    if (Lessons.length > 0) {
+        Terminal.executeCommand('load 0.1');
+    }
+    
+    console.log('✅ Hacker Lab Standalone ready!');
+    </script>
+</body>
+</html>

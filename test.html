@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test</title>
+</head>
+<body>
+    <h1>Testing JavaScript</h1>
+    <div id="output"></div>
+    
+    <script>
+        document.getElementById('output').innerHTML = 'JavaScript is working!';
+        
+        // Test if all modules are loaded
+        if (typeof State !== 'undefined') {
+            document.getElementById('output').innerHTML += '<br>State module loaded';
+        } else {
+            document.getElementById('output').innerHTML += '<br>State module NOT loaded';
+        }
+        
+        if (typeof Disasm !== 'undefined') {
+            document.getElementById('output').innerHTML += '<br>Disasm module loaded';
+        } else {
+            document.getElementById('output').innerHTML += '<br>Disasm module NOT loaded';
+        }
+        
+        if (typeof Simulator !== 'undefined') {
+            document.getElementById('output').innerHTML += '<br>Simulator module loaded';
+        } else {
+            document.getElementById('output').innerHTML += '<br>Simulator module NOT loaded';
+        }
+    </script>
+</body>
+</html>

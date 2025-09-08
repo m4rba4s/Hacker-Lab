@@ -1,0 +1,280 @@
+/**
+ * 🧠 CONCEPTS & REFERENCE STYLES
+ * Красивые справочные материалы и диаграммы
+ */
+
+/* Concepts Container */
+.concepts-container {
+    padding: 20px;
+    min-height: 700px;
+    overflow-y: visible;
+}
+
+.concepts-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(73, 247, 194, 0.1), rgba(126, 168, 255, 0.1));
+    border-radius: 12px;
+    border: 1px solid rgba(73, 247, 194, 0.3);
+}
+
+.concepts-header h2 {
+    color: var(--neon);
+    margin-bottom: 8px;
+    font-size: 20px;
+}
+
+/* Concept Sections */
+.concept-section {
+    margin-bottom: 30px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.concept-section h3 {
+    color: var(--accent);
+    margin-bottom: 15px;
+    font-size: 16px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Reference Grid */
+.reference-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+}
+
+.ref-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    padding: 16px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.ref-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(73, 247, 194, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.ref-card:hover::before {
+    left: 100%;
+}
+
+.ref-card:hover {
+    background: rgba(73, 247, 194, 0.08);
+    border-color: var(--neon);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(73, 247, 194, 0.2);
+}
+
+.ref-card h4 {
+    color: var(--neon);
+    margin-bottom: 12px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ref-list {
+    color: var(--ink);
+    font-size: 12px;
+    line-height: 1.6;
+    font-family: var(--mono);
+}
+
+.ref-list code {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--neon);
+    font-weight: bold;
+}
+
+/* Exploitation Concepts */
+.exploit-concepts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 20px;
+}
+
+.concept-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.concept-card:hover {
+    background: rgba(255, 92, 122, 0.08);
+    border-color: var(--danger);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255, 92, 122, 0.3);
+}
+
+.concept-card h4 {
+    color: var(--danger);
+    margin-bottom: 15px;
+    font-size: 15px;
+    text-align: center;
+}
+
+/* Buffer Overflow Diagram */
+.buffer-demo {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin: 15px 0;
+    font-family: var(--mono);
+    font-size: 11px;
+}
+
+.buffer-part {
+    padding: 8px 12px;
+    border-radius: 6px;
+    text-align: center;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.buffer-part.safe {
+    background: rgba(80, 250, 123, 0.2);
+    border: 2px solid var(--ok);
+    color: var(--ok);
+}
+
+.buffer-part.saved-rbp {
+    background: rgba(126, 168, 255, 0.2);
+    border: 2px solid var(--accent);
+    color: var(--accent);
+}
+
+.buffer-part.return-addr {
+    background: rgba(255, 92, 122, 0.2);
+    border: 2px solid var(--danger);
+    color: var(--danger);
+    animation: exploit-pulse 2s ease-in-out infinite;
+}
+
+@keyframes exploit-pulse {
+    0%, 100% { 
+        box-shadow: 0 0 10px rgba(255, 92, 122, 0.5);
+    }
+    50% { 
+        box-shadow: 0 0 20px rgba(255, 92, 122, 0.8);
+    }
+}
+
+.overflow-arrow {
+    color: var(--danger);
+    font-weight: bold;
+    text-align: center;
+    animation: arrow-blink 1.5s ease-in-out infinite;
+}
+
+@keyframes arrow-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* ROP Chain Diagram */
+.rop-chain {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin: 15px 0;
+    font-family: var(--mono);
+    font-size: 11px;
+}
+
+.rop-gadget {
+    background: rgba(255, 121, 198, 0.2);
+    border: 2px solid #ff79c6;
+    color: #ff79c6;
+    padding: 8px 12px;
+    border-radius: 6px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.rop-data {
+    background: rgba(255, 211, 110, 0.2);
+    border: 2px solid var(--warn);
+    color: var(--warn);
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-align: center;
+    font-style: italic;
+}
+
+.rop-gadget:hover, .rop-data:hover {
+    transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(255, 121, 198, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .reference-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .exploit-concepts {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 800px) {
+    .reference-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .ref-card, .concept-card {
+        padding: 12px;
+    }
+    
+    .concepts-container {
+        padding: 10px;
+    }
+}
+
+/* Interactive hover effects */
+.ref-card:hover .ref-list code {
+    color: var(--warn);
+    background: rgba(255, 211, 110, 0.2);
+}
+
+.concept-card:hover .buffer-part,
+.concept-card:hover .rop-gadget,
+.concept-card:hover .rop-data {
+    transform: scale(1.02);
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .exploit-pulse,
+    .arrow-blink,
+    .ref-card::before {
+        animation: none;
+    }
+    
+    .ref-card:hover,
+    .concept-card:hover {
+        transform: none;
+    }
+}
+

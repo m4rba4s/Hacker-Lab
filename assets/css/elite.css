@@ -1,0 +1,497 @@
+/**
+ * 🔥 ELITE HACKER LAB STYLES 🔥
+ * Неоновая киберпанк эстетика для элитных хакеров
+ */
+
+/* Neon glow animations */
+@keyframes neon-pulse {
+    0%, 100% { 
+        text-shadow: 0 0 10px var(--neon), 
+                     0 0 20px var(--neon), 
+                     0 0 30px var(--neon);
+    }
+    50% { 
+        text-shadow: 0 0 20px var(--neon), 
+                     0 0 30px var(--neon), 
+                     0 0 40px var(--neon);
+    }
+}
+
+@keyframes cyber-flicker {
+    0%, 100% { opacity: 1; }
+    92% { opacity: 1; }
+    93% { opacity: 0.6; }
+    94% { opacity: 1; }
+    95% { opacity: 0.8; }
+    96% { opacity: 1; }
+}
+
+@keyframes matrix-rain {
+    0% { transform: translateY(-100%); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(100%); opacity: 0; }
+}
+
+@keyframes scan-line {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+}
+
+/* Elite terminal styling */
+#terminal {
+    position: relative;
+    overflow: hidden;
+}
+
+#terminal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--neon), transparent);
+    animation: scan-line 8s linear infinite;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+#term-header {
+    background: linear-gradient(90deg, var(--panel), rgba(73, 247, 194, 0.1), var(--panel));
+    animation: cyber-flicker 10s infinite;
+}
+
+.term-line--success {
+    color: var(--neon);
+    animation: neon-pulse 2s ease-in-out;
+}
+
+/* Elite sidebar effects */
+.lesson-item {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.lesson-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(73, 247, 194, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.lesson-item:hover::before {
+    left: 100%;
+}
+
+.lesson-item.completed {
+    border-left: 3px solid var(--neon);
+    box-shadow: inset 0 0 20px rgba(73, 247, 194, 0.1);
+}
+
+.lesson-item.active {
+    background: rgba(73, 247, 194, 0.1);
+    border-color: var(--neon);
+    animation: neon-pulse 2s infinite;
+}
+
+/* Register flash animation */
+.reg-item.flash {
+    animation: reg-flash 0.5s ease;
+}
+
+@keyframes reg-flash {
+    0% { 
+        background: transparent; 
+        transform: scale(1);
+    }
+    50% { 
+        background: rgba(73, 247, 194, 0.3); 
+        transform: scale(1.05);
+        box-shadow: 0 0 20px var(--neon);
+    }
+    100% { 
+        background: transparent; 
+        transform: scale(1);
+    }
+}
+
+/* Elite button effects */
+.btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn.success:hover {
+    box-shadow: 0 0 20px var(--neon);
+    text-shadow: 0 0 10px currentColor;
+}
+
+/* Tab switching animation */
+.tab {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.tab::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--neon);
+    transition: width 0.3s ease;
+}
+
+.tab.active::after {
+    width: 100%;
+}
+
+.tab:hover {
+    color: var(--neon);
+    text-shadow: 0 0 10px currentColor;
+}
+
+/* Disassembly row effects */
+.disasm-row {
+    transition: all 0.2s ease;
+}
+
+.disasm-row:hover {
+    background: rgba(126, 168, 255, 0.1);
+    transform: translateX(5px);
+}
+
+.disasm-row.is-ip {
+    background: rgba(73, 247, 194, 0.15);
+    border-left: 3px solid var(--neon);
+    animation: cyber-flicker 5s infinite;
+}
+
+.disasm-row.is-bp {
+    background: rgba(255, 92, 122, 0.15);
+    border-left: 3px solid var(--danger);
+}
+
+/* Matrix effect for loading */
+.matrix-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0.05;
+    overflow: hidden;
+}
+
+.matrix-bg::before {
+    content: '10101010101010101010101010101010101010101010';
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 20px;
+    color: var(--neon);
+    animation: matrix-rain 10s linear infinite;
+    white-space: nowrap;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--muted);
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--neon);
+    box-shadow: 0 0 10px var(--neon);
+}
+
+/* Focus effects */
+input:focus,
+button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--neon);
+}
+
+/* Success animation */
+@keyframes success-pulse {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.success-animation {
+    animation: success-pulse 0.5s ease;
+}
+
+/* Glitch effect for errors */
+@keyframes glitch {
+    0%, 100% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+}
+
+.term-line--error {
+    animation: glitch 0.3s ease;
+    color: var(--danger);
+}
+
+/* Hex view styling */
+.hex-row:hover {
+    background: rgba(126, 168, 255, 0.1);
+}
+
+.hex-row:hover .hex-bytes {
+    color: var(--neon);
+}
+
+/* Modal effects */
+.modal-overlay {
+    backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.modal-card {
+    animation: modal-appear 0.3s ease;
+}
+
+@keyframes modal-appear {
+    0% { 
+        transform: scale(0.8) translateY(20px); 
+        opacity: 0; 
+    }
+    100% { 
+        transform: scale(1) translateY(0); 
+        opacity: 1; 
+    }
+}
+
+/* Elite loading spinner */
+.elite-loader {
+    width: 50px;
+    height: 50px;
+    border: 3px solid var(--panel);
+    border-top-color: var(--neon);
+    border-radius: 50%;
+    animation: elite-spin 1s linear infinite;
+}
+
+@keyframes elite-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Completion celebration */
+.celebration {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 100px;
+    animation: celebration-bounce 2s ease;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+@keyframes celebration-bounce {
+    0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); }
+    50% { transform: translate(-50%, -50%) scale(1.2) rotate(180deg); }
+    100% { transform: translate(-50%, -50%) scale(0) rotate(360deg); opacity: 0; }
+}
+
+/* ========== ELITE HACKER ENHANCEMENTS ========== */
+
+/* Glitch Text Effect */
+.glitch {
+    position: relative;
+    color: var(--neon);
+    font-weight: bold;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glitch::before {
+    animation: glitch-1 0.5s infinite;
+    color: var(--danger);
+    z-index: -1;
+    text-shadow: -2px 0 var(--danger);
+}
+
+.glitch::after {
+    animation: glitch-2 0.5s infinite;
+    color: var(--accent);
+    z-index: -2;
+    text-shadow: 2px 0 var(--accent);
+}
+
+@keyframes glitch-1 {
+    0%, 100% { clip-path: inset(0 0 100% 0); }
+    20% { clip-path: inset(20% 0 60% 0); }
+    40% { clip-path: inset(50% 0 20% 0); }
+    60% { clip-path: inset(80% 0 0 0); }
+    80% { clip-path: inset(10% 0 70% 0); }
+}
+
+@keyframes glitch-2 {
+    0%, 100% { clip-path: inset(100% 0 0 0); }
+    20% { clip-path: inset(60% 0 20% 0); }
+    40% { clip-path: inset(20% 0 50% 0); }
+    60% { clip-path: inset(0 0 80% 0); }
+    80% { clip-path: inset(70% 0 10% 0); }
+}
+
+/* Enhanced Terminal Input */
+#term-input {
+    background: transparent;
+    border: none;
+    color: var(--neon);
+    font-family: var(--mono);
+    outline: none;
+    caret-color: var(--neon);
+    text-shadow: 0 0 5px currentColor;
+}
+
+#term-input::selection {
+    background: rgba(73, 247, 194, 0.3);
+    color: var(--bg);
+}
+
+/* Cyber Enhancement for Buttons */
+.btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(73, 247, 194, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.4s, height 0.4s;
+}
+
+.btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* Animated Underline for Links */
+a {
+    position: relative;
+    text-decoration: none;
+    color: var(--accent);
+}
+
+a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--neon), var(--accent));
+    transition: width 0.3s ease;
+}
+
+a:hover::after {
+    width: 100%;
+}
+
+/* Matrix Digital Rain (subtle) */
+.matrix-bg::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(73, 247, 194, 0.03) 2px,
+            rgba(73, 247, 194, 0.03) 4px
+        );
+    pointer-events: none;
+    z-index: -1;
+    animation: matrix-scroll 20s linear infinite;
+}
+
+@keyframes matrix-scroll {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(100px); }
+}
+
+/* Elite Success Animation */
+.success-pulse {
+    animation: success-pulse 0.5s ease;
+}
+
+@keyframes success-pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); box-shadow: 0 0 20px var(--ok); }
+    100% { transform: scale(1); }
+}
+
+/* Hacker Prompt Animation */
+.hacker-prompt {
+    display: inline-block;
+    animation: prompt-blink 1s infinite;
+}
+
+@keyframes prompt-blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}

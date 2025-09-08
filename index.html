@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Assembly & RE Playground</title>
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/terminal.css">
+    <link rel="stylesheet" href="assets/css/elite.css">
+    <link rel="stylesheet" href="assets/css/fixes.css">
+    <link rel="stylesheet" href="assets/css/gamification.css">
+    <link rel="stylesheet" href="assets/css/lesson_cards.css">
+    <link rel="stylesheet" href="assets/css/elite_disasm.css">
+    <link rel="stylesheet" href="assets/css/flow_graph.css">
+    <link rel="stylesheet" href="assets/css/memory_viz.css">
+    <link rel="stylesheet" href="assets/css/concepts.css">
+    <link rel="stylesheet" href="assets/css/readability_fix.css">
+    <link rel="stylesheet" href="assets/css/memory_layout_fix.css">
+    <link rel="stylesheet" href="assets/css/view_height_fix.css">
+    <link rel="stylesheet" href="assets/css/concepts_final_fix.css">
+    <link rel="stylesheet" href="assets/css/scrollbar_fix.css">
+    <link rel="stylesheet" href="assets/css/source_code_fix.css">
+    <link rel="stylesheet" href="assets/css/syscalls.css">
+    
+    <!-- FINAL OVERRIDE - MUST BE LAST! -->
+    <link rel="stylesheet" href="assets/css/final_override.css">
+    
+    <!-- CSP temporarily disabled for debugging -->
+    <!-- <meta http-equiv="Content-Security-Policy" 
+          content="default-src 'self'; 
+                   script-src 'self' 'unsafe-inline' 'unsafe-eval'; 
+                   style-src 'self' 'unsafe-inline'; 
+                   img-src 'self' data:; 
+                   object-src 'none'; 
+                   base-uri 'none';
+                   form-action 'none';
+                   frame-ancestors 'none';"> -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta name="referrer" content="no-referrer">
+</head>
+<body>
+    <div id="app">
+        <header id="topbar">
+            <span class="glitch" data-text="🎮 RE Playground">🎮 RE Playground</span>
+            <div class="flex-spacer"></div>
+            <div class="user-stats">
+                <div id="user-level"></div>
+                <div id="user-xp"></div>
+                <div id="user-streak" class="streak-display"></div>
+            </div>
+            <button id="open-qoder" class="btn mini">🤖 Qoder</button>
+        </header>
+        
+        <main id="workspace">
+            <aside id="sidebar-left">
+                <!-- Module sections will be populated by JavaScript -->
+                <div class="loading" class="loading-centered">
+                    <div class="elite-loader" ></div>
+                    <p class="loading-text mt-20">Loading lessons...</p>
+                </div>
+            </aside>
+            
+            <section id="center">
+                <nav class="tabs">
+                    <div class="tab active" data-tab="disasm">Disassembly</div>
+                    <div class="tab" data-tab="source">Source Code</div>
+                    <div class="tab" data-tab="hex">Hex View</div>
+                    <div class="tab" data-tab="strings">Strings</div>
+                    <div class="tab" data-tab="flow">Flow</div>
+                    <div class="tab" data-tab="lesson">Lesson</div>
+                    <div class="tab" data-tab="stats">Stats</div>
+                    <div class="tab" data-tab="concepts">Concepts</div>
+                    <div class="tab" data-tab="syscalls">Syscalls</div>
+                </nav>
+                <div class="view-content">
+                    <!-- Tab content will be populated by JavaScript -->
+                    <div class="loading" class="loading-centered">
+                        <p class="loading-text">Initializing debugger...</p>
+                    </div>
+                </div>
+            </section>
+            
+            <aside id="sidebar-right">
+                <!-- Registers, flags, stack will be populated by JavaScript -->
+                <div class="loading" class="loading-padded">
+                    <p class="loading-text">Loading registers...</p>
+                </div>
+            </aside>
+        </main>
+        
+        <section id="terminal">
+            <div id="term-header">Terminal - Type 'help' for commands</div>
+            <div id="term-body">
+                <div class="loading-text">Initializing terminal...</div>
+            </div>
+            <div id="term-input-row">
+                <span id="term-prompt">(hlab)></span>
+                <input type="text" id="term-input" class="caret" placeholder="Type command..." autocomplete="off">
+            </div>
+        </section>
+    </div>
+
+    <!-- Qoder Modal -->
+    <div id="qoder-modal" class="modal hidden">
+        <!-- Modal content will be populated by JavaScript -->
+    </div>
+
+    <!-- JavaScript Files -->
+    <script>
+        console.log('🔥 Basic JS works!');
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('🚀 DOM Loaded!');
+            // Force dark theme only
+            try {
+                document.documentElement.classList.remove('theme-contrast');
+                localStorage.removeItem('hl_theme');
+            } catch (e) {}
+            document.body.style.background = '#0a0e1a';
+        });
+    </script>
+    <!-- Load syscalls database first -->
+    <script src="assets/js/syscalls_db.js"></script>
+    <script src="assets/js/syscalls_ui.js"></script>
+    <script type="module" src="assets/js/app.js"></script>
+    <script nomodule src="fallback.js"></script>
+    <script>
+        window.addEventListener('error', (e) => {
+            console.error('💀 Global Error:', e);
+            document.body.innerHTML += `<div style="color: red; position: fixed; top: 10px; left: 10px; background: black; padding: 10px; z-index: 9999;">ERROR: ${e.message}</div>`;
+        });
+        
+        // Module support check
+        setTimeout(() => {
+            if (!window.HackerLabApp || !window.HackerLabApp.state.initialized) {
+                console.error('🚨 App failed to initialize after 5 seconds!');
+                const script = document.createElement('script');
+                script.src = 'fallback.js';
+                document.body.appendChild(script);
+            }
+        }, 5000);
+    </script>
+</body>
+</html>

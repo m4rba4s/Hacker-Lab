@@ -1,0 +1,1477 @@
+/**
+ * 🔧 READABILITY FIXES
+ * Исправления для лучшей читаемости hex адресов и предотвращения перекрытия шрифтов
+ */
+
+/* Улучшенные стили для адресов */
+.disasm-addr {
+    color: var(--accent) !important;
+    font-weight: bold !important;
+    font-family: var(--mono) !important;
+    font-size: 12px !important;
+    min-width: 80px !important;
+    display: inline-block !important;
+    text-align: left !important;
+    margin-right: 12px !important;
+    padding: 2px 4px !important;
+    background: rgba(126, 168, 255, 0.1) !important;
+    border-radius: 4px !important;
+    letter-spacing: 0.5px !important;
+}
+
+/* Лучшие hex байты */
+.hex-byte {
+    display: inline-block !important;
+    width: 24px !important;  /* Увеличено с 20px */
+    height: 16px !important;
+    text-align: center !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    border-radius: 3px !important;
+    margin: 1px 2px !important;  /* Больше отступ */
+    font-size: 11px !important;
+    line-height: 16px !important;
+    font-family: var(--mono) !important;
+    font-weight: 500 !important;
+}
+
+/* Колонки дизассемблера с четкими границами */
+.disasm-line {
+    display: flex !important;
+    align-items: center !important;
+    padding: 4px 8px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    gap: 12px !important;
+    min-height: 24px !important;
+    line-height: 1.4 !important;
+}
+
+.disasm-bytes {
+    color: var(--muted) !important;
+    font-family: var(--mono) !important;
+    font-size: 11px !important;
+    min-width: 120px !important;
+    word-spacing: 3px !important;
+    letter-spacing: 1px !important;
+    text-align: left !important;
+}
+
+/* Мнемоники и операнды */
+.disasm-mnemonic {
+    color: var(--neon) !important;
+    font-weight: bold !important;
+    min-width: 60px !important;
+    text-align: left !important;
+    font-size: 12px !important;
+}
+
+.disasm-operands {
+    color: var(--ink) !important;
+    flex: 1 !important;
+    font-size: 12px !important;
+}
+
+/* Комментарии без перекрытия */
+.disasm-comment {
+    color: var(--muted) !important;
+    font-style: italic !important;
+    font-size: 11px !important;
+    margin-left: auto !important;
+    max-width: 200px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+/* Улучшенные hex заголовки */
+.hex-header {
+    background: rgba(73, 247, 194, 0.1) !important;
+    padding: 8px 12px !important;
+    border-bottom: 2px solid rgba(73, 247, 194, 0.3) !important;
+    font-weight: bold !important;
+    font-size: 12px !important;
+    color: var(--neon) !important;
+    text-align: center !important;
+}
+
+/* Offset адреса в hex view */
+.hex-offset {
+    color: var(--accent) !important;
+    font-weight: bold !important;
+    font-size: 11px !important;
+    min-width: 70px !important;
+    text-align: right !important;
+    margin-right: 8px !important;
+    padding: 2px 4px !important;
+    background: rgba(126, 168, 255, 0.08) !important;
+    border-radius: 3px !important;
+}
+
+/* ASCII колонка */
+.ascii-char {
+    font-family: var(--mono) !important;
+    font-size: 11px !important;
+    width: 12px !important;
+    text-align: center !important;
+    display: inline-block !important;
+    margin: 0 1px !important;
+}
+
+/* ===== SOURCE CODE TAB IMPROVEMENTS ===== */
+
+/* Source container */
+.source-container {
+    padding: 20px !important;
+    max-height: 600px !important;
+    overflow-y: auto !important;
+}
+
+.source-header {
+    background: linear-gradient(135deg, rgba(73, 247, 194, 0.1), rgba(126, 168, 255, 0.1)) !important;
+    padding: 16px !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(73, 247, 194, 0.3) !important;
+    margin-bottom: 20px !important;
+}
+
+.source-header h3 {
+    color: var(--neon) !important;
+    margin-bottom: 8px !important;
+    font-size: 18px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.source-icon {
+    font-size: 20px !important;
+}
+
+.compilation-info {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 12px !important;
+    align-items: center !important;
+}
+
+.code-type {
+    background: var(--accent) !important;
+    color: var(--bg) !important;
+    padding: 4px 8px !important;
+    border-radius: 12px !important;
+    font-size: 11px !important;
+    font-weight: bold !important;
+    text-transform: uppercase !important;
+}
+
+.compilation-cmd {
+    font-family: var(--mono) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    padding: 4px 8px !important;
+    border-radius: 4px !important;
+    color: var(--muted) !important;
+    font-size: 11px !important;
+}
+
+/* Code sections */
+.source-code {
+    margin-bottom: 20px !important;
+    background: rgba(255, 255, 255, 0.02) !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    overflow: hidden !important;
+}
+
+.code-header {
+    background: rgba(73, 247, 194, 0.08) !important;
+    padding: 8px 12px !important;
+    border-bottom: 1px solid rgba(73, 247, 194, 0.2) !important;
+    font-weight: bold !important;
+    color: var(--neon) !important;
+    font-size: 12px !important;
+}
+
+.source-code pre {
+    font-size: 13px !important;
+    line-height: 1.6 !important;
+    padding: 16px !important;
+    margin: 0 !important;
+    overflow-x: auto !important;
+    background: transparent !important;
+}
+
+.source-code code {
+    font-family: var(--mono) !important;
+    color: var(--ink) !important;
+}
+
+/* Code highlighting */
+.keyword {
+    color: #ff79c6 !important;
+    font-weight: bold !important;
+}
+
+.string {
+    color: #f1fa8c !important;
+}
+
+.comment {
+    color: var(--muted) !important;
+    font-style: italic !important;
+}
+
+.number {
+    color: #bd93f9 !important;
+    font-weight: bold !important;
+}
+
+.number.hex {
+    color: var(--accent) !important;
+    background: rgba(126, 168, 255, 0.1) !important;
+    padding: 1px 3px !important;
+    border-radius: 3px !important;
+}
+
+.number.binary {
+    color: var(--ok) !important;
+    background: rgba(80, 250, 123, 0.1) !important;
+    padding: 1px 3px !important;
+    border-radius: 3px !important;
+}
+
+.preprocessor {
+    color: #ff5555 !important;
+    font-weight: bold !important;
+}
+
+.asm-instruction {
+    color: var(--neon) !important;
+    font-weight: bold !important;
+}
+
+.asm-register {
+    color: var(--warn) !important;
+    font-weight: bold !important;
+}
+
+.asm-label {
+    color: #ff79c6 !important;
+    font-weight: bold !important;
+}
+
+.asm-memory {
+    color: var(--accent) !important;
+    background: rgba(126, 168, 255, 0.1) !important;
+    padding: 1px 3px !important;
+    border-radius: 3px !important;
+}
+
+/* Source mapping */
+.source-mapping {
+    background: rgba(255, 255, 255, 0.02) !important;
+    border-radius: 8px !important;
+    padding: 16px !important;
+    margin-bottom: 20px !important;
+    border: 1px solid rgba(255, 184, 108, 0.3) !important;
+}
+
+.source-mapping h4 {
+    color: var(--warn) !important;
+    margin-bottom: 12px !important;
+    font-size: 14px !important;
+}
+
+.mapping-item {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border-radius: 6px !important;
+    padding: 12px !important;
+    margin-bottom: 12px !important;
+    border-left: 3px solid var(--warn) !important;
+    transition: all 0.3s ease !important;
+}
+
+.mapping-item:hover {
+    background: rgba(255, 184, 108, 0.1) !important;
+    transform: translateX(5px) !important;
+}
+
+.mapping-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 8px !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+}
+
+.source-line {
+    color: var(--accent) !important;
+    font-weight: bold !important;
+    font-size: 12px !important;
+}
+
+.asm-range {
+    color: var(--warn) !important;
+    font-family: var(--mono) !important;
+    font-size: 11px !important;
+    background: rgba(255, 184, 108, 0.1) !important;
+    padding: 2px 6px !important;
+    border-radius: 4px !important;
+}
+
+.source-text {
+    margin-bottom: 6px !important;
+}
+
+.source-text code {
+    background: rgba(255, 255, 255, 0.1) !important;
+    padding: 2px 6px !important;
+    border-radius: 4px !important;
+    font-family: var(--mono) !important;
+    color: var(--neon) !important;
+    font-size: 12px !important;
+}
+
+.mapping-explanation {
+    color: var(--muted) !important;
+    font-size: 11px !important;
+    line-height: 1.4 !important;
+    font-style: italic !important;
+}
+
+/* No source available */
+.no-source {
+    text-align: center !important;
+    padding: 40px 20px !important;
+    background: rgba(255, 92, 122, 0.05) !important;
+    border-radius: 8px !important;
+    border: 1px dashed rgba(255, 92, 122, 0.3) !important;
+}
+
+.no-source.enhanced {
+    text-align: left !important;
+    padding: 20px !important;
+}
+
+.debug-info {
+    color: var(--muted) !important;
+    font-family: var(--mono) !important;
+    font-size: 12px !important;
+    margin: 4px 0 !important;
+}
+
+.fallback-code {
+    margin: 16px 0 !important;
+    background: rgba(255, 255, 255, 0.02) !important;
+    border-radius: 8px !important;
+    padding: 12px !important;
+    border-left: 3px solid var(--accent) !important;
+}
+
+.no-source p.muted {
+    color: var(--danger) !important;
+    font-size: 14px !important;
+    margin-bottom: 8px !important;
+}
+
+.no-source p.hint {
+    color: var(--muted) !important;
+    font-size: 12px !important;
+    font-style: italic !important;
+}
+
+/* Assembly information section */
+.assembly-info {
+    background: rgba(73, 247, 194, 0.05) !important;
+    border-radius: 8px !important;
+    padding: 16px !important;
+    margin-bottom: 20px !important;
+    border: 1px solid rgba(73, 247, 194, 0.3) !important;
+}
+
+.assembly-info h4 {
+    color: var(--neon) !important;
+    margin-bottom: 12px !important;
+    font-size: 14px !important;
+}
+
+.asm-explanation {
+    color: var(--ink) !important;
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+}
+
+.asm-explanation p {
+    margin-bottom: 12px !important;
+    font-style: italic !important;
+}
+
+.asm-explanation ul {
+    margin: 0 !important;
+    padding-left: 20px !important;
+}
+
+.asm-explanation li {
+    margin-bottom: 8px !important;
+    color: var(--ink) !important;
+}
+
+.asm-explanation strong {
+    color: var(--neon) !important;
+    font-weight: bold !important;
+}
+
+/* Lesson tip section */
+.lesson-tip {
+    background: rgba(126, 168, 255, 0.05) !important;
+    border-radius: 8px !important;
+    padding: 16px !important;
+    margin-top: 16px !important;
+    border: 1px solid rgba(126, 168, 255, 0.3) !important;
+}
+
+.lesson-tip h4 {
+    color: var(--accent) !important;
+    margin-bottom: 12px !important;
+    font-size: 14px !important;
+}
+
+.lesson-tip ul {
+    margin: 0 !important;
+    padding-left: 20px !important;
+}
+
+.lesson-tip li {
+    color: var(--ink) !important;
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+    margin-bottom: 6px !important;
+}
+
+.lesson-tip strong {
+    color: var(--accent) !important;
+    font-weight: bold !important;
+}
+
+/* Lesson content sections */
+.lesson-content {
+    background: rgba(255, 255, 255, 0.02) !important;
+    border-radius: 8px !important;
+    padding: 16px !important;
+    margin-bottom: 20px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.lesson-content h4 {
+    color: var(--accent) !important;
+    margin-bottom: 12px !important;
+    font-size: 14px !important;
+}
+
+.lesson-objective {
+    background: rgba(80, 250, 123, 0.05) !important;
+    border-radius: 8px !important;
+    padding: 16px !important;
+    margin-bottom: 20px !important;
+    border-left: 4px solid var(--ok) !important;
+}
+
+.lesson-objective h4 {
+    color: var(--ok) !important;
+    margin-bottom: 8px !important;
+}
+
+.lesson-objective p {
+    color: var(--ink) !important;
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+}
+
+.lesson-hints {
+    background: rgba(255, 184, 108, 0.05) !important;
+    border-radius: 8px !important;
+    padding: 16px !important;
+    margin-bottom: 20px !important;
+    border-left: 4px solid var(--warn) !important;
+}
+
+.lesson-hints h4 {
+    color: var(--warn) !important;
+    margin-bottom: 12px !important;
+}
+
+.lesson-hints ul {
+    margin: 0 !important;
+    padding-left: 20px !important;
+}
+
+.lesson-hints li {
+    color: var(--ink) !important;
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+    margin-bottom: 6px !important;
+}
+
+/* Responsive source code */
+@media (max-width: 1200px) {
+    .source-container {
+        padding: 15px !important;
+    }
+    
+    .compilation-info {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 8px !important;
+    }
+    
+    .mapping-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+}
+
+@media (max-width: 800px) {
+    .source-code pre {
+        font-size: 12px !important;
+        padding: 12px !important;
+    }
+    
+    .source-header h3 {
+        font-size: 16px !important;
+    }
+    
+    .mapping-item {
+        padding: 10px !important;
+    }
+}
+
+/* ===== STRINGS TAB IMPROVEMENTS ===== */
+
+.strings-container {
+    padding: 20px !important;
+    max-height: 600px !important;
+    overflow-y: auto !important;
+}
+
+.no-strings {
+    text-align: center !important;
+    padding: 40px 20px !important;
+    background: rgba(255, 184, 108, 0.05) !important;
+    border-radius: 8px !important;
+    border: 1px dashed rgba(255, 184, 108, 0.3) !important;
+}
+
+.no-strings h3 {
+    color: var(--warn) !important;
+    margin-bottom: 12px !important;
+}
+
+.string-help {
+    text-align: left !important;
+    max-width: 500px !important;
+    margin: 20px auto !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    padding: 16px !important;
+    border-radius: 8px !important;
+}
+
+.string-help h4 {
+    color: var(--neon) !important;
+    margin-bottom: 12px !important;
+    font-size: 14px !important;
+}
+
+.string-help ul {
+    margin: 0 0 12px 0 !important;
+    padding-left: 20px !important;
+}
+
+.string-help li {
+    color: var(--ink) !important;
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+    margin-bottom: 6px !important;
+}
+
+.string-help .hint {
+    color: var(--muted) !important;
+    font-style: italic !important;
+    text-align: center !important;
+    font-size: 12px !important;
+}
+
+/* String items */
+.strings-list {
+    margin-top: 20px !important;
+}
+
+.string-item.enhanced {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 8px !important;
+    padding: 16px !important;
+    margin-bottom: 12px !important;
+    transition: all 0.3s ease !important;
+}
+
+.string-item.enhanced:hover {
+    background: rgba(73, 247, 194, 0.08) !important;
+    border-color: var(--neon) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 5px 15px rgba(73, 247, 194, 0.2) !important;
+}
+
+.string-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 8px !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+}
+
+.string-index {
+    background: var(--accent) !important;
+    color: var(--bg) !important;
+    padding: 2px 6px !important;
+    border-radius: 4px !important;
+    font-family: var(--mono) !important;
+    font-size: 11px !important;
+    font-weight: bold !important;
+}
+
+.string-length {
+    color: var(--muted) !important;
+    font-size: 11px !important;
+    font-family: var(--mono) !important;
+}
+
+.string-type {
+    padding: 2px 6px !important;
+    border-radius: 4px !important;
+    font-size: 10px !important;
+    font-weight: bold !important;
+    text-transform: uppercase !important;
+}
+
+.string-type.flag {
+    background: var(--danger) !important;
+    color: var(--bg) !important;
+}
+
+.string-type.error {
+    background: #ff5555 !important;
+    color: var(--bg) !important;
+}
+
+.string-type.format {
+    background: var(--warn) !important;
+    color: var(--bg) !important;
+}
+
+.string-type.constant {
+    background: var(--accent) !important;
+    color: var(--bg) !important;
+}
+
+.string-type.escaped {
+    background: #ff79c6 !important;
+    color: var(--bg) !important;
+}
+
+.string-type.literal {
+    background: var(--ok) !important;
+    color: var(--bg) !important;
+}
+
+.string-content {
+    margin-bottom: 8px !important;
+}
+
+.string-value {
+    font-family: var(--mono) !important;
+    font-size: 13px !important;
+    color: var(--neon) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    padding: 8px 12px !important;
+    border-radius: 4px !important;
+    margin-bottom: 4px !important;
+    word-break: break-all !important;
+    border-left: 3px solid var(--neon) !important;
+}
+
+.string-hex {
+    font-family: var(--mono) !important;
+    font-size: 11px !important;
+    color: var(--muted) !important;
+    background: rgba(255, 255, 255, 0.02) !important;
+    padding: 6px 12px !important;
+    border-radius: 4px !important;
+    word-spacing: 2px !important;
+    border-left: 3px solid var(--muted) !important;
+}
+
+.string-analysis {
+    color: var(--ink) !important;
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+    padding: 8px 12px !important;
+    background: rgba(255, 255, 255, 0.02) !important;
+    border-radius: 4px !important;
+    border-left: 3px solid var(--accent) !important;
+}
+
+/* String statistics */
+.string-stats {
+    margin-top: 20px !important;
+    background: rgba(255, 255, 255, 0.02) !important;
+    padding: 16px !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.string-stats h4 {
+    color: var(--accent) !important;
+    margin-bottom: 12px !important;
+    font-size: 14px !important;
+}
+
+.stats-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) !important;
+    gap: 12px !important;
+}
+
+.stat-item {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 8px 12px !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border-radius: 6px !important;
+    border-left: 3px solid var(--neon) !important;
+}
+
+.stat-label {
+    color: var(--ink) !important;
+    font-size: 12px !important;
+}
+
+.stat-value {
+    color: var(--neon) !important;
+    font-family: var(--mono) !important;
+    font-weight: bold !important;
+    font-size: 13px !important;
+}
+
+/* Responsive strings */
+@media (max-width: 1200px) {
+    .string-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (max-width: 800px) {
+    .strings-container {
+        padding: 15px !important;
+    }
+    
+    .string-item.enhanced {
+        padding: 12px !important;
+    }
+    
+    .string-value, .string-hex {
+        font-size: 11px !important;
+        padding: 6px 8px !important;
+    }
+}
+
+/* ===== HEX VIEW TAB IMPROVEMENTS ===== */
+
+.hex-container {
+    padding: 20px !important;
+    max-height: 600px !important;
+    overflow-y: auto !important;
+}
+
+.no-hex-data {
+    text-align: center !important;
+    padding: 40px 20px !important;
+    background: rgba(126, 168, 255, 0.05) !important;
+    border-radius: 8px !important;
+    border: 1px dashed rgba(126, 168, 255, 0.3) !important;
+}
+
+.no-hex-data h3 {
+    color: var(--accent) !important;
+    margin-bottom: 12px !important;
+}
+
+.hex-help {
+    text-align: left !important;
+    max-width: 600px !important;
+    margin: 20px auto !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    padding: 16px !important;
+    border-radius: 8px !important;
+}
+
+.hex-help h4 {
+    color: var(--neon) !important;
+    margin-bottom: 12px !important;
+    font-size: 14px !important;
+}
+
+.hex-help ul {
+    margin: 0 0 16px 0 !important;
+    padding-left: 20px !important;
+}
+
+.hex-help li {
+    color: var(--ink) !important;
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+    margin-bottom: 6px !important;
+}
+
+.hex-examples {
+    margin-top: 16px !important;
+}
+
+.hex-examples h5 {
+    color: var(--warn) !important;
+    margin-bottom: 8px !important;
+    font-size: 13px !important;
+}
+
+.pattern-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)) !important;
+    gap: 8px !important;
+    margin-bottom: 12px !important;
+}
+
+.pattern-item {
+    background: rgba(255, 255, 255, 0.05) !important;
+    padding: 6px 8px !important;
+    border-radius: 4px !important;
+    border-left: 3px solid var(--muted) !important;
+    font-size: 11px !important;
+}
+
+.pattern-item code {
+    color: var(--accent) !important;
+    font-weight: bold !important;
+    margin-right: 6px !important;
+}
+
+/* Hex analysis section */
+.hex-analysis {
+    background: rgba(255, 255, 255, 0.02) !important;
+    padding: 16px !important;
+    border-radius: 8px !important;
+    margin-bottom: 20px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.hex-analysis h4 {
+    color: var(--accent) !important;
+    margin-bottom: 12px !important;
+    font-size: 14px !important;
+}
+
+.analysis-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)) !important;
+    gap: 12px !important;
+}
+
+.analysis-item {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 8px 12px !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border-radius: 6px !important;
+    border-left: 3px solid var(--neon) !important;
+}
+
+.analysis-label {
+    color: var(--muted) !important;
+    font-size: 11px !important;
+    margin-bottom: 4px !important;
+}
+
+.analysis-value {
+    color: var(--neon) !important;
+    font-family: var(--mono) !important;
+    font-weight: bold !important;
+    font-size: 14px !important;
+}
+
+/* Enhanced hex dump */
+.hex-dump {
+    background: rgba(255, 255, 255, 0.02) !important;
+    border-radius: 8px !important;
+    padding: 16px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    overflow-x: auto !important;
+}
+
+.hex-row.enhanced {
+    display: flex !important;
+    font-family: var(--mono) !important;
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+    margin-bottom: 2px !important;
+    transition: all 0.2s ease !important;
+}
+
+.hex-row.enhanced:hover {
+    background: rgba(73, 247, 194, 0.08) !important;
+    border-radius: 4px !important;
+}
+
+.hex-offset.enhanced {
+    color: var(--accent) !important;
+    font-weight: bold !important;
+    min-width: 80px !important;
+    margin-right: 12px !important;
+    padding: 2px 6px !important;
+    background: rgba(126, 168, 255, 0.1) !important;
+    border-radius: 3px !important;
+}
+
+.hex-bytes.enhanced {
+    flex: 1 !important;
+    margin-right: 12px !important;
+}
+
+.hex-byte {
+    cursor: pointer !important;
+    border-radius: 2px !important;
+    padding: 1px 2px !important;
+    transition: all 0.2s ease !important;
+}
+
+.hex-byte:hover {
+    background: rgba(73, 247, 194, 0.3) !important;
+    transform: scale(1.1) !important;
+    z-index: 5 !important;
+    position: relative !important;
+}
+
+.hex-byte.null-byte {
+    color: var(--muted) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.hex-byte.printable {
+    color: var(--neon) !important;
+    background: rgba(80, 250, 123, 0.1) !important;
+}
+
+.hex-byte.nop-instruction {
+    color: var(--warn) !important;
+    background: rgba(255, 184, 108, 0.2) !important;
+    font-weight: bold !important;
+}
+
+.hex-byte.rex-prefix {
+    color: var(--danger) !important;
+    background: rgba(255, 92, 122, 0.2) !important;
+    font-weight: bold !important;
+}
+
+.hex-byte.non-printable {
+    color: var(--accent) !important;
+    background: rgba(126, 168, 255, 0.1) !important;
+}
+
+.hex-byte.empty {
+    color: transparent !important;
+}
+
+.hex-ascii.enhanced {
+    color: var(--ink) !important;
+    min-width: 140px !important;
+    font-weight: 500 !important;
+    background: rgba(255, 255, 255, 0.02) !important;
+    padding: 2px 6px !important;
+    border-radius: 3px !important;
+    border-left: 2px solid var(--muted) !important;
+}
+
+/* Pattern analysis */
+.pattern-analysis {
+    margin-top: 20px !important;
+    background: rgba(255, 255, 255, 0.02) !important;
+    padding: 16px !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(255, 184, 108, 0.3) !important;
+}
+
+.pattern-analysis h4 {
+    color: var(--warn) !important;
+    margin-bottom: 12px !important;
+    font-size: 14px !important;
+}
+
+.pattern-found {
+    background: rgba(255, 255, 255, 0.03) !important;
+    padding: 8px 12px !important;
+    border-radius: 6px !important;
+    margin-bottom: 8px !important;
+    border-left: 3px solid var(--warn) !important;
+}
+
+.pattern-type {
+    color: var(--warn) !important;
+    font-weight: bold !important;
+    font-size: 12px !important;
+}
+
+.pattern-desc {
+    color: var(--ink) !important;
+    font-size: 11px !important;
+    margin-left: 8px !important;
+}
+
+/* Responsive hex view */
+@media (max-width: 1200px) {
+    .analysis-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    
+    .pattern-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (max-width: 800px) {
+    .hex-container {
+        padding: 15px !important;
+    }
+    
+    .hex-row.enhanced {
+        font-size: 11px !important;
+    }
+    
+    .hex-offset.enhanced {
+        min-width: 60px !important;
+        font-size: 10px !important;
+    }
+    
+    .hex-ascii.enhanced {
+        min-width: 100px !important;
+        font-size: 10px !important;
+    }
+    
+    .analysis-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* Flow диаграммы */
+.flow-text {
+    fill: #e6f1ff !important;
+    font-family: var(--mono) !important;
+    font-size: 12px !important;  /* Увеличено с 11px */
+    text-anchor: middle !important;
+    dominant-baseline: middle !important;
+    pointer-events: none !important;
+}
+
+.flow-text.address {
+    fill: #49f7c2 !important;
+    font-weight: bold !important;
+    font-size: 11px !important;
+}
+
+/* Canvas flow container */
+.flow-container {
+    padding: 12px !important;
+}
+
+#flow-canvas-container {
+    width: 100% !important;
+    height: 520px !important;
+    border: 1px solid rgba(73, 247, 194, 0.3) !important;
+    border-radius: 8px !important;
+    background: rgba(255,255,255,0.02) !important;
+    overflow: hidden !important;
+}
+
+.no-flow-data {
+    text-align: center !important;
+    padding: 30px 20px !important;
+    background: rgba(126, 168, 255, 0.05) !important;
+    border-radius: 8px !important;
+    border: 1px dashed rgba(126, 168, 255, 0.3) !important;
+}
+
+.flow-help {
+    text-align: left !important;
+    max-width: 600px !important;
+    margin: 16px auto 0 auto !important;
+}
+
+/* Registers panel */
+.reg-name {
+    font-weight: bold !important;
+    color: var(--neon) !important;
+    font-size: 14px !important;  /* Увеличено */
+    margin-bottom: 4px !important;
+    font-family: var(--mono) !important;
+}
+
+.reg-value {
+    font-family: var(--mono) !important;
+    font-size: 12px !important;  /* Увеличено */
+    color: var(--accent) !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.5px !important;
+}
+
+/* Terminal улучшения */
+.terminal-line {
+    font-size: 13px !important;  /* Увеличено с 12px */
+    line-height: 1.5 !important;
+    padding: 2px 0 !important;
+    font-family: var(--mono) !important;
+}
+
+/* Responsive fixes */
+@media (max-width: 1200px) {
+    .disasm-addr {
+        min-width: 70px !important;
+        font-size: 11px !important;
+    }
+    
+    .disasm-bytes {
+        min-width: 100px !important;
+        font-size: 10px !important;
+    }
+    
+    .hex-byte {
+        width: 22px !important;
+        font-size: 10px !important;
+    }
+}
+
+@media (max-width: 800px) {
+    .disasm-addr {
+        min-width: 60px !important;
+        font-size: 10px !important;
+    }
+    
+    .disasm-comment {
+        max-width: 150px !important;
+        font-size: 10px !important;
+    }
+    
+    .source-code pre {
+        font-size: 12px !important;
+        padding: 12px !important;
+    }
+}
+
+/* Контрастность для лучшей видимости */
+@media (prefers-contrast: high) {
+    .disasm-addr {
+        background: rgba(126, 168, 255, 0.2) !important;
+        border: 1px solid var(--accent) !important;
+    }
+    
+    .hex-byte {
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    }
+}
+
+/* Анимации без перекрытия */
+.hex-byte:hover, .disasm-addr:hover {
+    z-index: 5 !important;
+    position: relative !important;
+    transform: scale(1.05) !important;
+}
+
+/* Убираем конфликты overflow */
+.view-content {
+    overflow: visible !important;
+}
+
+.disasm-container {
+    overflow-x: auto !important;
+    overflow-y: auto !important;
+}
+
+/* ===== ENHANCED FLOW DIAGRAMS WITH ARROWS ===== */
+
+/* Flow block improvements */
+.flow-block {
+    position: relative !important;
+    margin-bottom: 20px !important;
+}
+
+.block-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+}
+
+.block-number {
+    font-weight: bold !important;
+    color: var(--neon) !important;
+    font-size: 13px !important;
+}
+
+.block-address {
+    font-family: var(--mono) !important;
+    color: var(--accent) !important;
+    font-size: 11px !important;
+    font-weight: bold !important;
+}
+
+/* Arrow indicators within instructions */
+.conditional-arrow {
+    color: var(--warn) !important;
+    font-weight: bold !important;
+    margin-right: 6px !important;
+    font-size: 14px !important;
+    animation: conditional-pulse 2s ease-in-out infinite !important;
+}
+
+.jump-arrow {
+    color: var(--danger) !important;
+    font-weight: bold !important;
+    margin-right: 6px !important;
+    font-size: 14px !important;
+    animation: jump-glow 1.5s ease-in-out infinite !important;
+}
+
+.call-arrow {
+    color: #ff79c6 !important;
+    font-weight: bold !important;
+    margin-right: 6px !important;
+    font-size: 14px !important;
+}
+
+.return-arrow {
+    color: var(--ok) !important;
+    font-weight: bold !important;
+    margin-right: 6px !important;
+    font-size: 14px !important;
+    animation: return-pulse 3s ease-in-out infinite !important;
+}
+
+@keyframes conditional-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.1); }
+}
+
+@keyframes jump-glow {
+    0%, 100% { 
+        color: var(--danger);
+        text-shadow: 0 0 5px rgba(255, 92, 122, 0.5);
+    }
+    50% { 
+        color: #ff8fa3;
+        text-shadow: 0 0 10px rgba(255, 92, 122, 0.8);
+    }
+}
+
+@keyframes return-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+/* Block connections */
+.block-connections {
+    margin-top: 12px !important;
+    padding: 8px !important;
+    background: rgba(73, 247, 194, 0.05) !important;
+    border-radius: 6px !important;
+    border-left: 3px solid var(--neon) !important;
+}
+
+.connection-indicator {
+    padding: 4px 8px !important;
+    margin: 2px 0 !important;
+    border-radius: 4px !important;
+    font-size: 11px !important;
+    font-weight: bold !important;
+    transition: all 0.3s ease !important;
+    cursor: pointer !important;
+}
+
+.connection-indicator:hover {
+    transform: translateX(5px) !important;
+    box-shadow: 0 3px 10px rgba(73, 247, 194, 0.3) !important;
+}
+
+.connection-indicator.conditional {
+    background: rgba(255, 184, 108, 0.2) !important;
+    color: var(--warn) !important;
+    border-left: 3px solid var(--warn) !important;
+}
+
+.connection-indicator.jump {
+    background: rgba(255, 92, 122, 0.2) !important;
+    color: var(--danger) !important;
+    border-left: 3px solid var(--danger) !important;
+}
+
+.connection-indicator.fallthrough {
+    background: rgba(80, 250, 123, 0.2) !important;
+    color: var(--ok) !important;
+    border-left: 3px solid var(--ok) !important;
+}
+
+.connection-indicator.call {
+    background: rgba(255, 121, 198, 0.2) !important;
+    color: #ff79c6 !important;
+    border-left: 3px solid #ff79c6 !important;
+}
+
+/* Flow legend improvements */
+.flow-legend {
+    position: absolute !important;
+    top: 20px !important;
+    right: 20px !important;
+    background: rgba(0, 0, 0, 0.9) !important;
+    border: 2px solid var(--neon) !important;
+    border-radius: 8px !important;
+    padding: 12px !important;
+    min-width: 200px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7) !important;
+}
+
+.flow-legend h4 {
+    color: var(--neon) !important;
+    margin-bottom: 8px !important;
+    font-size: 14px !important;
+    text-align: center !important;
+    border-bottom: 1px solid rgba(73, 247, 194, 0.3) !important;
+    padding-bottom: 6px !important;
+}
+
+.flow-legend .legend-item {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin: 6px 0 !important;
+    font-size: 12px !important;
+    color: var(--ink) !important;
+    padding: 3px 6px !important;
+    border-radius: 4px !important;
+    transition: all 0.2s ease !important;
+}
+
+.flow-legend .legend-item:hover {
+    background: rgba(73, 247, 194, 0.1) !important;
+    transform: translateX(3px) !important;
+}
+
+/* Flow instruction line improvements */
+.flow-line {
+    display: flex !important;
+    align-items: center !important;
+    padding: 2px 6px !important;
+    border-radius: 4px !important;
+    transition: all 0.2s ease !important;
+    font-family: var(--mono) !important;
+    font-size: 12px !important;
+}
+
+.flow-line:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+    transform: translateX(4px) !important;
+}
+
+/* Enhanced active block styling */
+.flow-block.active {
+    background: rgba(73, 247, 194, 0.12) !important;
+    border: 2px solid var(--neon) !important;
+    box-shadow: 0 0 20px rgba(73, 247, 194, 0.4) !important;
+    transform: scale(1.02) !important;
+}
+
+.flow-block.active .block-header {
+    background: rgba(73, 247, 194, 0.1) !important;
+}
+
+/* Block type specific styling */
+.block-type.entry {
+    background: var(--ok) !important;
+    color: var(--bg) !important;
+    animation: entry-glow 2s ease-in-out infinite !important;
+}
+
+.block-type.exit {
+    background: var(--danger) !important;
+    color: var(--bg) !important;
+    animation: exit-glow 2s ease-in-out infinite !important;
+}
+
+.block-type.conditional {
+    background: var(--warn) !important;
+    color: var(--bg) !important;
+}
+
+.block-type.call {
+    background: #ff79c6 !important;
+    color: var(--bg) !important;
+}
+
+@keyframes entry-glow {
+    0%, 100% { box-shadow: 0 0 5px rgba(80, 250, 123, 0.5); }
+    50% { box-shadow: 0 0 15px rgba(80, 250, 123, 0.8); }
+}
+
+@keyframes exit-glow {
+    0%, 100% { box-shadow: 0 0 5px rgba(255, 92, 122, 0.5); }
+    50% { box-shadow: 0 0 15px rgba(255, 92, 122, 0.8); }
+}
+
+/* Responsive flow diagrams */
+@media (max-width: 1200px) {
+    .flow-legend {
+        position: static !important;
+        margin: 10px auto !important;
+        max-width: 300px !important;
+    }
+}
+
+@media (max-width: 800px) {
+    .conditional-arrow, .jump-arrow, .call-arrow, .return-arrow {
+        font-size: 12px !important;
+        margin-right: 4px !important;
+    }
+    
+    .connection-indicator {
+        font-size: 10px !important;
+        padding: 3px 6px !important;
+    }
+    
+    .flow-line {
+        font-size: 11px !important;
+    }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+    .conditional-arrow, .jump-arrow, .return-arrow,
+    .block-type.entry, .block-type.exit {
+        animation: none !important;
+    }
+    
+    .connection-indicator:hover, .flow-line:hover, .flow-block.active {
+        transform: none !important;
+    }
+}

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacker Lab Test Suite</title>
+    
+    <!-- Load all CSS files like main app -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/terminal.css">
+    <link rel="stylesheet" href="assets/css/elite.css">
+    <link rel="stylesheet" href="assets/css/fixes.css">
+    <link rel="stylesheet" href="assets/css/gamification.css">
+    <link rel="stylesheet" href="assets/css/lesson_cards.css">
+    <link rel="stylesheet" href="assets/css/elite_disasm.css">
+    <link rel="stylesheet" href="assets/css/flow_graph.css">
+    <link rel="stylesheet" href="assets/css/memory_viz.css">
+    <link rel="stylesheet" href="assets/css/concepts.css">
+    <link rel="stylesheet" href="assets/css/readability_fix.css">
+    
+    <style>
+        #test-console {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--bg);
+            border: 2px solid var(--neon);
+            border-radius: 8px;
+            padding: 30px;
+            max-width: 800px;
+            max-height: 600px;
+            overflow-y: auto;
+            box-shadow: 0 0 30px rgba(73, 247, 194, 0.5);
+            z-index: 10000;
+        }
+        
+        #test-console h1 {
+            color: var(--neon);
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px var(--neon);
+        }
+        
+        .test-output {
+            background: var(--panel);
+            padding: 15px;
+            border-radius: 4px;
+            font-family: var(--mono);
+            font-size: 12px;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .test-pass {
+            color: var(--ok);
+        }
+        
+        .test-fail {
+            color: var(--danger);
+        }
+        
+        .test-info {
+            color: var(--accent);
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body class="matrix-bg">
+    <!-- Test Console Overlay -->
+    <div id="test-console">
+        <h1 class="glitch" data-text="🧪 HACKER LAB TEST SUITE">🧪 HACKER LAB TEST SUITE</h1>
+        <div class="test-output" id="test-output">
+            <div class="test-info">Initializing test environment...</div>
+        </div>
+    </div>
+    
+    <!-- Main App Structure (hidden during tests) -->
+    <div id="app" class="hidden">
+        <header id="topbar">
+            <span class="glitch" data-text="🚀 Hacker Lab v2">🚀 Hacker Lab v2</span>
+            <div class="flex-spacer"></div>
+            <div class="user-stats">
+                <div id="user-level"></div>
+                <div id="user-xp"></div>
+                <div id="user-streak" class="streak-display"></div>
+            </div>
+            <button id="open-qoder" class="btn mini">🤖 Qoder</button>
+        </header>
+        
+        <main id="workspace">
+            <aside id="sidebar-left">
+                <div class="loading loading-centered">
+                    <div class="elite-loader"></div>
+                    <p class="loading-text mt-20">Loading lessons...</p>
+                </div>
+            </aside>
+            
+            <section id="center">
+                <nav class="tabs">
+                    <div class="tab active" data-tab="disasm">Disassembly</div>
+                    <div class="tab" data-tab="source">Source Code</div>
+                    <div class="tab" data-tab="hex">Hex View</div>
+                    <div class="tab" data-tab="strings">Strings</div>
+                    <div class="tab" data-tab="flow">Flow</div>
+                    <div class="tab" data-tab="lesson">Lesson</div>
+                    <div class="tab" data-tab="stats">Stats</div>
+                    <div class="tab" data-tab="concepts">Concepts</div>
+                </nav>
+                <div class="view-content">
+                    <div class="loading loading-centered">
+                        <p class="loading-text">Initializing debugger...</p>
+                    </div>
+                </div>
+            </section>
+            
+            <aside id="sidebar-right">
+                <div class="loading loading-padded">
+                    <p class="loading-text">Loading registers...</p>
+                </div>
+            </aside>
+        </main>
+        
+        <section id="terminal">
+            <div id="term-header">Terminal - Type 'help' for commands</div>
+            <div id="term-body">
+                <div class="loading-text">Initializing terminal...</div>
+            </div>
+            <div id="term-input-row">
+                <span id="term-prompt">(hlab)></span>
+                <input type="text" id="term-input" class="caret" placeholder="Type command..." autocomplete="off">
+            </div>
+        </section>
+    </div>
+
+    <!-- Qoder Modal -->
+    <div id="qoder-modal" class="modal hidden"></div>
+    
+    <!-- Override console.log to show in test output -->
+    <script>
+        const testOutput = document.getElementById('test-output');
+        const originalLog = console.log;
+        const originalError = console.error;
+        
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const message = args.join(' ');
+            const div = document.createElement('div');
+            
+            if (message.includes('✅')) {
+                div.className = 'test-pass';
+            } else if (message.includes('❌')) {
+                div.className = 'test-fail';
+            } else if (message.includes('===')) {
+                div.className = 'test-info';
+                div.style.fontWeight = 'bold';
+                div.style.marginTop = '10px';
+            } else {
+                div.className = 'test-info';
+            }
+            
+            div.textContent = message;
+            testOutput.appendChild(div);
+            testOutput.scrollTop = testOutput.scrollHeight;
+        };
+        
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            const message = args.join(' ');
+            const div = document.createElement('div');
+            div.className = 'test-fail';
+            div.textContent = message;
+            testOutput.appendChild(div);
+            testOutput.scrollTop = testOutput.scrollHeight;
+        };
+        
+        // Clear initial message
+        setTimeout(() => {
+            testOutput.innerHTML = '';
+        }, 100);
+    </script>
+    
+    <!-- Load app and run tests -->
+    <script type="module" src="assets/js/app.js"></script>
+    <script src="test_suite.js"></script>
+</body>
+</html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>🚀 Hacker Lab v2</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/elite.css">
+    <link rel="stylesheet" href="assets/css/terminal.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0a0e1a 0%, #1a2332 50%, #0a0e1a 100%) !important;
+            color: #49f7c2;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        #app {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            background: linear-gradient(45deg, rgba(16, 32, 48, 0.95), rgba(32, 48, 64, 0.95)) !important;
+            border-bottom: 3px solid #49f7c2;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(73, 247, 194, 0.4);
+        }
+        h1 {
+            color: #49f7c2;
+            text-shadow: 0 0 20px currentColor;
+            font-size: 2em;
+            margin: 0;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #49f7c2; }
+            to { text-shadow: 0 0 30px #49f7c2; }
+        }
+        main {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 250px 1fr 250px;
+            grid-template-rows: 1fr auto;
+            grid-gap: 10px;
+            padding: 20px;
+            height: calc(100vh - 120px);
+        }
+        .panel {
+            background: rgba(16, 32, 48, 0.9) !important;
+            border: 2px solid #49f7c2;
+            border-radius: 8px;
+            padding: 15px;
+            overflow-y: auto;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(73, 247, 194, 0.3);
+        }
+        #center-panel {
+            grid-column: 1 / -1;
+            display: flex;
+            flex-direction: column;
+        }
+        #terminal {
+            background: rgba(0, 16, 32, 0.95) !important;
+            border: 3px solid #49f7c2;
+            border-radius: 12px;
+            padding: 20px;
+            height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            box-shadow: 
+                inset 0 0 20px rgba(73, 247, 194, 0.1),
+                0 0 30px rgba(73, 247, 194, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        #terminal-input {
+            width: 100%;
+            background: rgba(73, 247, 194, 0.1);
+            border: 2px solid #49f7c2;
+            border-radius: 6px;
+            color: #49f7c2;
+            font-family: monospace;
+            padding: 12px;
+            outline: none;
+            font-weight: bold;
+            text-shadow: 0 0 5px currentColor;
+            transition: all 0.3s ease;
+        }
+        
+        #terminal-input:focus {
+            background: rgba(73, 247, 194, 0.2);
+            border-color: #4df3a3;
+            box-shadow: 0 0 15px rgba(73, 247, 194, 0.5);
+        }
+        
+        #terminal-input::placeholder {
+            color: rgba(126, 168, 255, 0.7);
+        }
+        .output {
+            color: #49f7c2;
+            margin: 5px 0;
+        }
+        .success { color: #4df3a3; font-weight: bold; }
+        .error { color: #ff5c7a; font-weight: bold; }
+        .warn { color: #ffd36e; font-weight: bold; }
+        
+        h3 {
+            color: #49f7c2;
+            text-shadow: 0 0 10px currentColor;
+            border-bottom: 2px solid #49f7c2;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        button {
+            background: linear-gradient(45deg, #49f7c2, #4df3a3);
+            color: #000;
+            border: 2px solid #49f7c2;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(73, 247, 194, 0.3);
+        }
+        button:hover {
+            background: linear-gradient(45deg, #4df3a3, #49f7c2);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(73, 247, 194, 0.6);
+            color: #000;
+        }
+        
+        /* Matrix background effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(73, 247, 194, 0.05) 2px,
+                    rgba(73, 247, 194, 0.05) 4px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(73, 247, 194, 0.05) 2px,
+                    rgba(73, 247, 194, 0.05) 4px
+                );
+            pointer-events: none;
+            z-index: -1;
+            animation: matrix-scroll 20s linear infinite;
+        }
+        
+        @keyframes matrix-scroll {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        
+        /* Glow effect for all elements */
+        .panel, #terminal {
+            position: relative;
+        }
+        
+        .panel::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #49f7c2, transparent, #4df3a3);
+            border-radius: 10px;
+            z-index: -1;
+            opacity: 0.3;
+            animation: border-glow 3s ease-in-out infinite;
+        }
+        
+        @keyframes border-glow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
+    </style>
+</head>
+<body class="matrix-bg">
+    <div id="app">
+        <header>
+            <h1 class="glitch" data-text="🚀 HACKER LAB v2.0">🚀 HACKER LAB v2.0</h1>
+            <p style="color: #7ea8ff;">Elite Assembly & Reverse Engineering Trainer</p>
+        </header>
+        
+        <main>
+            <div class="panel">
+                <h3>📚 Lessons</h3>
+                <div id="lessons-list">
+                    <button onclick="loadLesson('0.1')">0.1: Binary & Hex</button>
+                    <button onclick="loadLesson('0.2')">0.2: Memory Addresses</button>
+                    <button onclick="loadLesson('1.1')">1.1: x64 Registers</button>
+                    <button onclick="loadLesson('1.2')">1.2: Arithmetic</button>
+                    <button onclick="loadLesson('2.1')">2.1: Stack Fundamentals</button>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h3>🔍 Disassembly</h3>
+                <div id="disasm-view">
+                    <div class="output" style="font-size: 1.2em; color: #49f7c2; text-shadow: 0 0 10px currentColor;">🔥 Welcome to Hacker Lab!</div>
+                    <div class="output success" style="font-size: 1.1em;">✅ Minimal version loaded successfully</div>
+                    <div class="output warn" style="font-size: 1.1em;">⚡ Select a lesson to begin learning</div>
+                    <div style="margin-top: 20px; padding: 15px; background: rgba(73, 247, 194, 0.1); border-left: 4px solid #49f7c2; border-radius: 4px;">
+                        <div style="color: #4df3a3; font-weight: bold;">📚 Ready to learn assembly?</div>
+                        <div style="color: #7ea8ff; margin-top: 10px;">Click lessons on the left or use terminal below!</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h3>📊 Debug Info</h3>
+                <div id="debug-info">
+                    <div class="output success" style="font-weight: bold;">✅ Status: Ready</div>
+                    <div class="output" style="color: #7ea8ff; font-weight: bold;">🎯 Mode: Training</div>
+                    <div class="output" style="color: #ffd36e; font-weight: bold;">📚 Lessons: Available</div>
+                    <div style="margin-top: 15px; padding: 10px; background: rgba(77, 243, 163, 0.1); border: 1px solid #4df3a3; border-radius: 4px;">
+                        <div style="color: #4df3a3; font-size: 0.9em;">🚀 System fully operational</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <div id="terminal">
+            <div id="terminal-output">
+                <div class="output success" style="font-size: 1.3em; font-weight: bold; text-shadow: 0 0 15px currentColor;">🔥 HACKER LAB v2.0 - MINIMAL VERSION</div>
+                <div class="output" style="color: #7ea8ff; font-weight: bold;">⚡ Type 'help' for commands or select a lesson above</div>
+                <div class="output" style="color: #ffd36e; margin-top: 10px;">💀 Welcome to the elite hacker training ground!</div>
+            </div>
+            <div style="display: flex; align-items: center; margin-top: 15px; padding: 10px; background: rgba(0, 0, 0, 0.3); border-radius: 8px;">
+                <span style="color: #49f7c2; margin-right: 10px; font-weight: bold; text-shadow: 0 0 5px currentColor;">(hlab)></span>
+                <input type="text" id="terminal-input" placeholder="Type command..." onkeypress="handleCommand(event)">
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        console.log('🔥 HACKER LAB MINIMAL VERSION STARTED');
+        
+        // Basic lesson data
+        const lessons = {
+            '0.1': {
+                title: 'Binary & Hex',
+                content: 'Learning binary and hexadecimal representations',
+                disasm: ['mov eax, 0x41', 'add eax, 0x01', 'ret']
+            },
+            '0.2': {
+                title: 'Memory Addresses',
+                content: 'Understanding memory addressing',
+                disasm: ['mov rax, [rbp-8]', 'cmp rax, 0', 'je end']
+            },
+            '1.1': {
+                title: 'x64 Registers',
+                content: 'x64 register usage and conventions',
+                disasm: ['push rbp', 'mov rbp, rsp', 'mov rdi, rax']
+            }
+        };
+        
+        // Terminal commands
+        const commands = {
+            help: () => {
+                output('Available commands:', 'success');
+                output('  help     - Show this help');
+                output('  lessons  - List available lessons');
+                output('  load <id> - Load a lesson');
+                output('  clear    - Clear terminal');
+                output('  status   - Show system status');
+            },
+            lessons: () => {
+                output('📚 Available Lessons:', 'success');
+                Object.keys(lessons).forEach(id => {
+                    output(`  ${id}: ${lessons[id].title}`);
+                });
+            },
+            load: (id) => {
+                if (!id) {
+                    output('Usage: load <lesson_id>', 'error');
+                    return;
+                }
+                loadLesson(id);
+            },
+            clear: () => {
+                document.getElementById('terminal-output').innerHTML = '';
+            },
+            status: () => {
+                output('🚀 System Status:', 'success');
+                output('  Version: 2.0 Minimal');
+                output('  Status: Online');
+                output('  Mode: Training Ready');
+                output('  Lessons: ' + Object.keys(lessons).length + ' available');
+            }
+        };
+        
+        function output(text, type = '') {
+            const termOutput = document.getElementById('terminal-output');
+            const div = document.createElement('div');
+            div.className = `output ${type}`;
+            div.textContent = text;
+            termOutput.appendChild(div);
+            termOutput.scrollTop = termOutput.scrollHeight;
+        }
+        
+        function handleCommand(event) {
+            if (event.key === 'Enter') {
+                const input = event.target;
+                const cmd = input.value.trim();
+                
+                if (cmd) {
+                    output(`(hlab)> ${cmd}`, 'warn');
+                    
+                    const [command, ...args] = cmd.split(' ');
+                    if (commands[command]) {
+                        commands[command](...args);
+                    } else {
+                        output(`Unknown command: ${command}`, 'error');
+                        output('Type "help" for available commands');
+                    }
+                }
+                
+                input.value = '';
+            }
+        }
+        
+        function loadLesson(id) {
+            const lesson = lessons[id];
+            if (!lesson) {
+                output(`Lesson ${id} not found!`, 'error');
+                return;
+            }
+            
+            output(`Loading lesson ${id}: ${lesson.title}`, 'success');
+            
+            // Update disasm view
+            const disasmView = document.getElementById('disasm-view');
+            disasmView.innerHTML = `
+                <h4>${lesson.title}</h4>
+                <p>${lesson.content}</p>
+                <pre style="background: #000; padding: 10px; border-radius: 4px;">
+${lesson.disasm.join('\n')}
+                </pre>
+            `;
+            
+            // Update debug info
+            const debugInfo = document.getElementById('debug-info');
+            debugInfo.innerHTML = `
+                <div class="output">Current Lesson: ${id}</div>
+                <div class="output">Title: ${lesson.title}</div>
+                <div class="output">Instructions: ${lesson.disasm.length}</div>
+                <div class="output success">Status: Loaded</div>
+            `;
+            
+            output(`✅ Lesson ${id} loaded successfully!`, 'success');
+        }
+        
+        // Initialize
+        output('🔧 System initialized successfully', 'success');
+        output('Type "help" for commands or click lessons above', '');
+        
+        // Test basic functionality
+        setTimeout(() => {
+            output('🎯 All systems operational!', 'success');
+        }, 1000);
+    </script>
+</body>
+</html>

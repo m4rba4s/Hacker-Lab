@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tab Test</title>
+    <style>
+        body { font-family: monospace; margin: 20px; background: #0b0f14; color: #e6f1ff; }
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tab { padding: 10px 15px; background: #10161d; cursor: pointer; border: 1px solid #18222e; }
+        .tab.active { background: #49f7c2; color: #0b0f14; }
+        .view-content { min-height: 300px; border: 1px solid #18222e; padding: 20px; background: #10161d; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <h1>Tab Test</h1>
+    
+    <nav class="tabs">
+        <div class="tab active" data-tab="disasm">Disassembly</div>
+        <div class="tab" data-tab="source">Source Code</div>
+        <div class="tab" data-tab="hex">Hex View</div>
+        <div class="tab" data-tab="strings">Strings</div>
+        <div class="tab" data-tab="flow">Flow</div>
+        <div class="tab" data-tab="lesson">Lesson</div>
+    </nav>
+    
+    <div class="view-content" id="view-content">
+        Loading...
+    </div>
+    
+    <script>
+        // Simple tab switching implementation
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            const content = document.getElementById('view-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Update active tab
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    // Show content
+                    const tabName = tab.dataset.tab;
+                    content.innerHTML = `<h2>${tabName} Content</h2><p>This is the ${tabName} tab content.</p>`;
+                });
+            });
+            
+            // Initialize with disassembly tab
+            content.innerHTML = '<h2>Disassembly Content</h2><p>This is the disassembly tab content.</p>';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+/**
+ * 🔧 CSS FIXES FOR TEXT OVERLAP AND LAYOUT ISSUES
+ */
+
+/* Global text overflow prevention */
+* {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+}
+
+/* Fix sidebar dimensions */
+#sidebar-left {
+    overflow-x: hidden;
+    min-width: 280px;
+    max-width: 280px;
+    white-space: normal;
+}
+
+#sidebar-right {
+    overflow-x: hidden;
+    min-width: 340px;
+    max-width: 340px;
+    white-space: normal;
+}
+
+/* Fix terminal height */
+#terminal {
+    min-height: 220px;
+    max-height: 220px;
+    overflow: hidden;
+}
+
+#term-output {
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+/* Fix tab content */
+.tab-content {
+    overflow-x: hidden;
+    position: relative;
+    padding-bottom: 20px;
+}
+
+/* Fix lesson items */
+.lesson-item {
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.lesson-item h4 {
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.lesson-item .desc {
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+/* Fix register display */
+.reg-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.reg-item .reg-name {
+    flex: 0 0 auto;
+    margin-right: 10px;
+}
+
+.reg-item .reg-value {
+    flex: 1 1 auto;
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Fix stack display */
+.stack-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    white-space: nowrap;
+}
+
+.stack-item .stack-addr {
+    flex: 0 0 auto;
+}
+
+.stack-item .stack-value {
+    flex: 1 1 auto;
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Fix disassembly view */
+.disasm-container {
+    overflow-x: auto;
+}
+
+.disasm-row {
+    min-width: 600px;
+}
+
+/* Fix hex view */
+.hex-container {
+    overflow-x: auto;
+}
+
+.hex-row {
+    white-space: nowrap;
+    min-width: 700px;
+}
+
+/* Fix code blocks */
+pre, code {
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* Better spacing */
+.tab-content > * {
+    margin-bottom: 15px;
+}
+
+.tab-content > *:last-child {
+    margin-bottom: 0;
+}
+
+/* Fix modal layout */
+.modal-card {
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1400px) {
+    #workspace {
+        grid-template-columns: 260px 1fr 320px;
+    }
+    
+    #sidebar-left {
+        min-width: 260px;
+        max-width: 260px;
+    }
+    
+    #sidebar-right {
+        min-width: 320px;
+        max-width: 320px;
+    }
+}
+
+@media (max-width: 1200px) {
+    #workspace {
+        grid-template-columns: 240px 1fr 300px;
+    }
+    
+    #sidebar-left {
+        min-width: 240px;
+        max-width: 240px;
+        font-size: 12px;
+    }
+    
+    #sidebar-right {
+        min-width: 300px;
+        max-width: 300px;
+        font-size: 11px;
+    }
+}
+
+/* High contrast mode for better readability */
+@media (prefers-contrast: high) {
+    .disasm-row.is-ip {
+        background: rgba(73, 247, 194, 0.25);
+        border-left-width: 4px;
+    }
+    
+    .disasm-row.is-bp {
+        background: rgba(255, 92, 122, 0.25);
+        border-left-width: 4px;
+    }
+    
+    .lesson-item.completed {
+        border-left-width: 4px;
+    }
+}
+

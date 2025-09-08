@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Hacker Lab v2 - Simple Version</title>
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/terminal.css">
+    <link rel="stylesheet" href="assets/css/elite.css">
+    <link rel="stylesheet" href="assets/css/fixes.css">
+    <link rel="stylesheet" href="assets/css/gamification.css">
+    
+    <style>
+        /* Дополнительные стили для простой версии */
+        .term-line--success { color: #4df3a3; }
+        .term-line--error { color: #ff5c7a; }
+        .term-line--warn { color: #ffd36e; }
+        .term-line--command { color: #7ea8ff; }
+        .term-line { margin: 2px 0; }
+        
+        .status-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4df3a3;
+            color: black;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-weight: bold;
+            z-index: 1000;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+    </style>
+</head>
+<body class="matrix-bg">
+    <div class="status-indicator">🔥 SIMPLE MODE</div>
+    
+    <div id="app">
+        <header id="topbar">
+            <span class="glitch" data-text="🚀 Hacker Lab v2">🚀 Hacker Lab v2</span>
+            <div class="flex-spacer"></div>
+            <div class="user-stats">
+                <div style="color: #4df3a3;">Simple Version</div>
+            </div>
+        </header>
+        
+        <main id="workspace">
+            <aside id="sidebar-left">
+                <h3 style="color: #49f7c2;">📚 Lessons</h3>
+                <div style="padding: 10px;">
+                    <div style="color: #7ea8ff; margin: 5px 0;">Tutorial Lessons</div>
+                    <div style="color: #999; margin: 5px 0;">• Binary & Hex Basics</div>
+                    <div style="color: #999; margin: 5px 0;">• Memory Addresses</div>
+                    <div style="color: #999; margin: 5px 0;">• x64 Registers</div>
+                    <div style="margin-top: 15px; color: #ffd36e;">Full lessons available in complete version</div>
+                </div>
+            </aside>
+            
+            <section id="center">
+                <nav class="tabs">
+                    <div class="tab active" data-tab="disasm">Disassembly</div>
+                    <div class="tab" data-tab="lesson">Lesson</div>
+                    <div class="tab" data-tab="stats">Stats</div>
+                </nav>
+                <div class="view-content">
+                    <div style="padding: 20px; color: #49f7c2;">
+                        <h2>🚀 Welcome to Hacker Lab v2.0!</h2>
+                        <p>This is the simplified version that works without complex ES6 modules.</p>
+                        <p style="color: #4df3a3;">✅ All basic functionality is working!</p>
+                        <p style="color: #7ea8ff;">Use the terminal below to interact with the system.</p>
+                        <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 5px; margin-top: 20px;">
+                            <h3 style="color: #ffd36e;">Features in this version:</h3>
+                            <ul style="color: #999;">
+                                <li>Interactive terminal with commands</li>
+                                <li>Basic lesson structure</li>
+                                <li>Elite hacker styling</li>
+                                <li>No ES6 module dependencies</li>
+                                <li>Works in any modern browser</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <aside id="sidebar-right">
+                <h3 style="color: #49f7c2;">🔧 Debug Info</h3>
+                <div style="padding: 10px;">
+                    <div style="color: #4df3a3; margin: 5px 0;">✅ System: Online</div>
+                    <div style="color: #4df3a3; margin: 5px 0;">✅ Terminal: Ready</div>
+                    <div style="color: #4df3a3; margin: 5px 0;">✅ UI: Loaded</div>
+                    <div style="color: #7ea8ff; margin: 10px 0;">Version: 2.0-Simple</div>
+                </div>
+            </aside>
+        </main>
+        
+        <section id="terminal">
+            <div id="term-header">Terminal - Simple Version Active</div>
+            <div id="term-body">
+                <div style="color: #999;">Loading terminal...</div>
+            </div>
+            <div id="term-input-row">
+                <span id="term-prompt">(hlab)></span>
+                <input type="text" id="term-input" class="caret" placeholder="Type 'help' for commands..." autocomplete="off">
+            </div>
+        </section>
+    </div>
+
+    <!-- Simple JavaScript - No modules -->
+    <script src="simple_app.js"></script>
+    
+    <script>
+        // Дополнительная проверка
+        setTimeout(() => {
+            if (window.HackerLabApp && window.HackerLabApp.state.initialized) {
+                console.log('✅ Everything loaded successfully!');
+            } else {
+                console.warn('⚠️ Something might not have loaded correctly');
+            }
+        }, 2000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,659 @@
+/**
+ * 🔬 ELITE DISASSEMBLER VISUALIZATION
+ * Мирового уровня интерфейс для анализа машинного кода
+ */
+
+/* Enhanced Disassembly View */
+.disasm-container {
+    position: relative;
+    background: linear-gradient(135deg, #0a0e13 0%, #0f1419 100%);
+    border: 1px solid rgba(73, 247, 194, 0.3);
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: var(--mono);
+    box-shadow: 0 0 30px rgba(73, 247, 194, 0.1);
+}
+
+.disasm-header {
+    background: linear-gradient(90deg, rgba(73, 247, 194, 0.1), rgba(126, 168, 255, 0.1));
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(73, 247, 194, 0.3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.disasm-title {
+    color: var(--neon);
+    font-weight: bold;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.disasm-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.disasm-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--ink);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.disasm-btn:hover {
+    background: rgba(73, 247, 194, 0.2);
+    border-color: var(--neon);
+    color: var(--neon);
+    transform: translateY(-1px);
+}
+
+/* Enhanced Disassembly Rows */
+/* Use higher specificity to override generic component styles */
+.disasm-content {
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: calc(100vh - 350px);
+    padding-bottom: 20px;
+}
+
+.disasm-container .disasm-row {
+    display: grid;
+    /* FIXED: More space for each column to prevent overlap */
+    grid-template-columns: 
+        50px        /* line number */
+        160px       /* address - enough for 0x0000000000401000 */
+        140px       /* bytes - enough for 48 89 e5 */  
+        80px        /* mnemonic */
+        200px       /* operands */
+        minmax(150px, 1fr);  /* comment */
+    gap: 20px;  /* Increased gap */
+    padding: 8px 20px;
+    font-size: 13px;
+    line-height: 1.6;
+    border-radius: 0;
+    margin: 0;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    position: relative;
+    border-left: 3px solid transparent;
+    align-items: center;
+    min-width: 900px;  /* Minimum width to force horizontal scroll */
+}
+
+.disasm-row:hover {
+    background: rgba(126, 168, 255, 0.08);
+    border-left-color: var(--accent);
+}
+
+.disasm-row.is-ip {
+    background: rgba(73, 247, 194, 0.12);
+    border-left-color: var(--neon);
+    box-shadow: inset 0 0 20px rgba(73, 247, 194, 0.1);
+    animation: current-instruction 2s ease-in-out infinite;
+}
+
+@keyframes current-instruction {
+    0%, 100% { box-shadow: inset 0 0 20px rgba(73, 247, 194, 0.1); }
+    50% { box-shadow: inset 0 0 30px rgba(73, 247, 194, 0.2); }
+}
+
+.disasm-row.is-bp {
+    background: rgba(255, 92, 122, 0.12);
+    border-left-color: var(--danger);
+}
+
+.disasm-row.is-call {
+    border-left-color: var(--warn);
+}
+
+.disasm-row.is-jump {
+    border-left-color: var(--accent);
+}
+
+.disasm-row.is-ret {
+    border-left-color: var(--ok);
+}
+
+/* Column Styling */
+.disasm-line-number {
+    color: var(--muted);
+    font-size: 11px;
+    text-align: right;
+    opacity: 0.7;
+}
+
+.disasm-addr {
+    color: var(--accent);
+    font-weight: bold;
+    font-family: var(--mono);
+    white-space: nowrap;
+}
+
+.disasm-bytes {
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 11px;
+    word-spacing: 2px;
+    white-space: nowrap;
+}
+
+.disasm-mnemonic {
+    color: var(--neon);
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.disasm-operands {
+    color: var(--ink);
+    min-width: 0; /* allow shrinking in grid */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.disasm-comment {
+    color: var(--muted);
+    font-style: italic;
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Instruction Type Colors */
+.instr-mov { color: #8be9fd; }
+.instr-add, .instr-sub, .instr-mul, .instr-div { color: #50fa7b; }
+.instr-jmp, .instr-je, .instr-jne, .instr-jl, .instr-jg { color: #ffb86c; }
+.instr-call { color: #ff79c6; }
+.instr-ret { color: #bd93f9; }
+.instr-push, .instr-pop { color: #f1fa8c; }
+.instr-cmp, .instr-test { color: #ff5555; }
+
+/* Enhanced Operand Highlighting */
+.operand-reg {
+    color: var(--neon);
+    font-weight: bold;
+}
+
+.operand-imm {
+    color: var(--warn);
+}
+
+.operand-mem {
+    color: var(--accent);
+    background: rgba(126, 168, 255, 0.1);
+    padding: 1px 3px;
+    border-radius: 2px;
+}
+
+.operand-addr {
+    color: var(--danger);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* Advanced Flow Visualization */
+.flow-arrow {
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    opacity: 0.7;
+}
+
+.flow-arrow.jump-forward {
+    border-left: 6px solid var(--accent);
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+}
+
+.flow-arrow.jump-backward {
+    border-right: 6px solid var(--warn);
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+}
+
+.flow-arrow.call-arrow {
+    border-left: 6px solid var(--danger);
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+}
+
+/* Instruction Analysis Panel */
+.instruction-analysis {
+    background: rgba(0, 0, 0, 0.4);
+    border-top: 1px solid rgba(73, 247, 194, 0.3);
+    padding: 16px;
+    display: none;
+}
+
+.instruction-analysis.show {
+    display: block;
+    animation: slide-down 0.3s ease;
+}
+
+@keyframes slide-down {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.analysis-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.analysis-section h4 {
+    color: var(--neon);
+    margin-bottom: 8px;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.analysis-content {
+    color: var(--ink);
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+/* Memory Layout Visualization */
+.memory-viz {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 12px;
+    margin: 8px 0;
+}
+
+.memory-region {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 8px;
+    border-radius: 3px;
+    margin: 2px 0;
+    font-size: 11px;
+}
+
+.memory-region.stack {
+    background: rgba(255, 211, 110, 0.1);
+    border-left: 3px solid var(--warn);
+}
+
+.memory-region.heap {
+    background: rgba(80, 250, 123, 0.1);
+    border-left: 3px solid var(--ok);
+}
+
+.memory-region.code {
+    background: rgba(255, 121, 198, 0.1);
+    border-left: 3px solid var(--danger);
+}
+
+/* Register State Visualization */
+.register-timeline {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    padding: 12px;
+    margin: 8px 0;
+}
+
+.timeline-row {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 12px;
+    margin: 4px 0;
+    align-items: center;
+}
+
+.timeline-register {
+    color: var(--neon);
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.timeline-bar {
+    height: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.timeline-value {
+    height: 100%;
+    background: linear-gradient(90deg, var(--neon), var(--accent));
+    border-radius: 10px;
+    transition: width 0.5s ease;
+    position: relative;
+}
+
+.timeline-text {
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 10px;
+    color: var(--bg);
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Cross-References */
+.xref-panel {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+    padding: 12px;
+    margin: 8px 0;
+}
+
+.xref-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 8px;
+    margin: 2px 0;
+    border-radius: 3px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.xref-item:hover {
+    background: rgba(73, 247, 194, 0.1);
+}
+
+.xref-addr {
+    color: var(--accent);
+    font-family: var(--mono);
+}
+
+.xref-type {
+    color: var(--muted);
+    font-size: 10px;
+}
+
+/* Minimap for large disassembly */
+.disasm-minimap {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    width: 120px;
+    height: 200px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    overflow: hidden;
+    z-index: 100;
+}
+
+.minimap-line {
+    height: 2px;
+    margin: 1px 0;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.minimap-line.current {
+    background: var(--neon);
+    box-shadow: 0 0 2px var(--neon);
+}
+
+.minimap-line.breakpoint {
+    background: var(--danger);
+}
+
+.minimap-viewport {
+    position: absolute;
+    border: 1px solid var(--accent);
+    background: rgba(126, 168, 255, 0.1);
+    pointer-events: none;
+}
+
+/* Interactive Tooltips */
+.disasm-tooltip {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.95);
+    border: 1px solid var(--neon);
+    border-radius: 6px;
+    padding: 12px;
+    z-index: 1000;
+    min-width: 200px;
+    max-width: 400px;
+    font-size: 11px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.2s ease;
+    pointer-events: none;
+}
+
+.disasm-tooltip.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.tooltip-header {
+    color: var(--neon);
+    font-weight: bold;
+    margin-bottom: 8px;
+    border-bottom: 1px solid rgba(73, 247, 194, 0.3);
+    padding-bottom: 4px;
+}
+
+.tooltip-content {
+    color: var(--ink);
+    line-height: 1.4;
+}
+
+.tooltip-section {
+    margin: 6px 0;
+}
+
+.tooltip-label {
+    color: var(--accent);
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+/* Responsive Design */
+@media (max-width: 1400px) {
+    .disasm-row {
+        grid-template-columns: 30px 90px 100px 1fr 70px;
+        gap: 8px;
+    }
+    
+    .disasm-comment {
+        display: none;
+    }
+}
+
+@media (max-width: 1000px) {
+    .disasm-row {
+        grid-template-columns: 80px 100px 1fr 60px;
+    }
+    
+    .disasm-line-number {
+        display: none;
+    }
+}
+
+/* Dark mode enhancements */
+@media (prefers-color-scheme: dark) {
+    .disasm-container {
+        box-shadow: 0 0 40px rgba(73, 247, 194, 0.15);
+    }
+}
+
+/* Enhanced Hex Editor */
+.hex-header {
+    display: grid;
+    grid-template-columns: 100px 1fr 200px;
+    gap: 12px;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(73, 247, 194, 0.3);
+    font-weight: bold;
+    color: var(--accent);
+    font-size: 11px;
+}
+
+.hex-bytes-header {
+    display: grid;
+    grid-template-columns: repeat(16, 1fr);
+    gap: 4px;
+    text-align: center;
+}
+
+.hex-content {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.hex-byte {
+    display: inline-block;
+    width: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 2px;
+    margin: 1px;
+}
+
+.hex-byte:hover, .ascii-char:hover {
+    background: rgba(73, 247, 194, 0.2);
+    transform: scale(1.1);
+}
+
+.hex-byte.highlighted, .ascii-char.highlighted {
+    background: var(--warn) !important;
+    color: var(--bg) !important;
+    font-weight: bold;
+    transform: scale(1.2);
+    z-index: 10;
+    position: relative;
+}
+
+/* Byte type coloring */
+.hex-byte.null-byte { color: var(--muted); }
+.hex-byte.printable { color: var(--neon); }
+.hex-byte.nop-instruction { color: var(--warn); }
+.hex-byte.rex-prefix { color: var(--danger); }
+.hex-byte.breakpoint { color: var(--danger); font-weight: bold; }
+.hex-byte.non-printable { color: var(--accent); }
+
+.ascii-char.letter { color: var(--neon); }
+.ascii-char.digit { color: var(--warn); }
+.ascii-char.printable { color: var(--ink); }
+.ascii-char.non-printable { color: var(--muted); }
+
+.hex-annotations {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    padding: 15px;
+    margin-top: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hex-annotations h4 {
+    color: var(--neon);
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.annotation-item {
+    padding: 6px 0;
+    font-size: 12px;
+    color: var(--ink);
+}
+
+/* Flow Graph Enhancements */
+.flow-container {
+    position: relative;
+    height: 100%;
+}
+
+#flow-canvas-container {
+    position: relative;
+    background: linear-gradient(135deg, #0a0e13 0%, #0f1419 100%);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.flow-block {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    margin: 10px;
+    padding: 15px;
+    transition: all 0.3s ease;
+}
+
+.flow-block:hover {
+    background: rgba(73, 247, 194, 0.1);
+    border-color: var(--neon);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(73, 247, 194, 0.3);
+}
+
+.flow-block.active {
+    background: rgba(73, 247, 194, 0.15);
+    border-color: var(--neon);
+    box-shadow: 0 0 20px rgba(73, 247, 194, 0.4);
+}
+
+.block-header {
+    color: var(--neon);
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+
+.flow-line {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 2px 4px;
+    margin: 1px 0;
+    border-radius: 2px;
+    transition: all 0.2s ease;
+}
+
+.flow-line.current {
+    background: rgba(73, 247, 194, 0.3);
+    color: var(--neon);
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(73, 247, 194, 0.5);
+}
+
+.flow-line:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .disasm-row.is-ip {
+        border-left-width: 5px;
+        background: rgba(73, 247, 194, 0.2);
+    }
+    
+    .disasm-row.is-bp {
+        border-left-width: 5px;
+        background: rgba(255, 92, 122, 0.2);
+    }
+    
+    .hex-byte.highlighted {
+        border: 2px solid var(--warn);
+    }
+    
+    .flow-block.active {
+        border-width: 3px;
+    }
+}

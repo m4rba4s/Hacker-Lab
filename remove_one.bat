@@ -1,0 +1,27 @@
+@echo off
+del "final_fixes_test.html" 2>nul
+del "final_test.html" 2>nul  
+del "fix_critical.js" 2>nul
+del "height_fix_test.html" 2>nul
+del "memory_fix_test.html" 2>nul
+del "patch_test.html" 2>nul
+del "quick_fix.html" 2>nul
+del "run_tests.html" 2>nul
+del "tabtest.html" 2>nul
+del "test.html" 2>nul
+del "test_basic.html" 2>nul
+del "test_final.html" 2>nul
+del "test_full.js" 2>nul
+del "test_layout.html" 2>nul
+del "test_scrollbar.html" 2>nul
+del "test_simple.html" 2>nul
+del "test_suite.js" 2>nul
+del "welcome_test.html" 2>nul
+del "diagnose.html" 2>nul
+del "hacker_lab.html" 2>nul
+del "hacker_lab_standalone.html" 2>nul
+del "index_simple.html" 2>nul
+del "OPEN_ME.html" 2>nul
+del "FIX_SUMMARY.md" 2>nul
+del "cleanup_temp.ps1" 2>nul
+echo Cleanup completed!

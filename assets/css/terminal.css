@@ -1,0 +1,235 @@
+/* Terminal Styles */
+
+.loading-message {
+    color: var(--neon);
+}
+
+/* Terminal Suggestions Popup */
+.terminal-suggestions {
+    position: absolute;
+    background: var(--bg);
+    border: 1px solid var(--neon);
+    border-radius: 8px;
+    box-shadow: 0 -4px 12px rgba(73, 247, 194, 0.2);
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    min-width: 300px;
+}
+
+.terminal-suggestions.hidden {
+    display: none;
+}
+
+.suggestion-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.suggestion-item:hover {
+    background: rgba(73, 247, 194, 0.1);
+    color: var(--neon);
+}
+
+.suggestion-cmd {
+    font-weight: bold;
+    color: var(--accent);
+}
+
+.suggestion-desc {
+    font-size: 0.85em;
+    color: var(--muted);
+    margin-left: 15px;
+}
+#terminal {
+    background: var(--panel); 
+    border-top: 1px solid #18222e;
+    display: flex; 
+    flex-direction: column; 
+    font-size: 13px;
+}
+
+#term-header {
+    padding: 8px 15px; 
+    background: rgba(255,255,255,0.02);
+    font-weight: bold; 
+    color: var(--neon);
+}
+
+#term-body {
+    flex: 1; 
+    padding: 10px 15px; 
+    overflow-y: auto; 
+    line-height: 1.4;
+}
+
+#term-input-row {
+    display: flex; 
+    padding: 8px 15px; 
+    border-top: 1px solid #18222e;
+}
+
+#term-prompt { 
+    color: var(--neon); 
+    margin-right: 8px; 
+}
+
+#term-input {
+    flex: 1; 
+    background: transparent; 
+    border: none; 
+    color: var(--ink);
+    font-family: var(--mono); 
+    font-size: 13px; 
+    outline: none;
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,.5);
+}
+
+.modal-card {
+    position: relative;
+    background: var(--panel);
+    border: 1px solid #18222e;
+    border-radius: 12px;
+    width: min(880px,92vw);
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow);
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+    padding: 10px 14px;
+    border-bottom: 1px solid #18222e;
+    color: var(--neon);
+    font-weight: bold;
+}
+
+.modal-body {
+    padding: 12px;
+    overflow: auto;
+}
+
+/* Qoder UI */
+.q-grid {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 10px;
+    align-items: center;
+}
+
+.q-grid input, .q-grid select {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid #243140;
+    border-radius: 8px;
+    color: var(--ink);
+    padding: 8px 10px;
+    font-family: var(--mono);
+    font-size: 12px;
+}
+
+.q-params {
+    grid-column: 1/-1;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 8px;
+}
+
+.param-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.param-group label {
+    font-size: 11px;
+    color: var(--neon);
+    font-weight: bold;
+}
+
+.q-output {
+    margin-top: 12px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid #243140;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 12px;
+    line-height: 1.4;
+    max-height: 32vh;
+    overflow: auto;
+}
+
+/* CFG Styles */
+.cfg-node {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cfg-node rect {
+    fill: var(--panel);
+    stroke: #2a3a4c;
+    stroke-width: 1.5;
+    rx: 6;
+}
+
+.cfg-node text {
+    fill: var(--ink);
+    font-family: var(--mono);
+    font-size: 11px;
+    dominant-baseline: middle;
+    text-anchor: start;
+}
+
+.cfg-node.active rect {
+    stroke: var(--neon);
+    fill: rgba(73,247,194,0.1);
+    filter: url(#glow);
+}
+
+.cfg-node:hover rect {
+    stroke: var(--accent);
+    fill: rgba(126,168,255,0.05);
+}
+
+.cfg-edge {
+    stroke: #3a4757;
+    stroke-width: 2;
+    fill: none;
+    marker-end: url(#arrowhead);
+}
+
+.cfg-edge.active {
+    stroke: var(--neon);
+    stroke-dasharray: 4 2;
+    animation: flow 1s linear infinite;
+}
+
+@keyframes flow {
+    to { stroke-dashoffset: -12; }
+}

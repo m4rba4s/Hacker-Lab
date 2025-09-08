@@ -1,0 +1,361 @@
+/**
+ * 🧠 MEMORY VISUALIZATION STYLES
+ * Интерактивные схемы памяти и архитектуры
+ */
+
+/* Memory Visualization Container */
+.memory-visualization {
+    padding: 20px;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.memory-section {
+    margin-bottom: 30px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid rgba(73, 247, 194, 0.2);
+}
+
+.memory-section h3 {
+    color: var(--neon);
+    margin-bottom: 15px;
+    font-size: 16px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Memory Layout Diagram */
+.memory-diagram {
+    display: flex;
+    justify-content: center;
+}
+
+.memory-region {
+    min-width: 500px;
+    width: 100%;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    overflow: hidden;
+    background: linear-gradient(180deg, #1a2025 0%, #0f1419 100%);
+}
+
+.region-header {
+    background: rgba(73, 247, 194, 0.1);
+    padding: 8px;
+    text-align: center;
+    font-weight: bold;
+    color: var(--neon);
+    font-size: 12px;
+    border-bottom: 1px solid rgba(73, 247, 194, 0.3);
+}
+
+.region-block {
+    padding: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.region-block:hover {
+    background: rgba(73, 247, 194, 0.1);
+    transform: translateX(5px);
+    border-left: 4px solid var(--neon);
+}
+
+.region-block.kernel {
+    background: rgba(255, 92, 122, 0.1);
+    border-left: 4px solid var(--danger);
+}
+
+.region-block.stack {
+    background: rgba(255, 211, 110, 0.1);
+    border-left: 4px solid var(--warn);
+}
+
+.region-block.heap {
+    background: rgba(80, 250, 123, 0.1);
+    border-left: 4px solid var(--ok);
+}
+
+.region-block.data, .region-block.bss {
+    background: rgba(126, 168, 255, 0.1);
+    border-left: 4px solid var(--accent);
+}
+
+.region-block.text {
+    background: rgba(255, 121, 198, 0.1);
+    border-left: 4px solid #ff79c6;
+}
+
+.region-name {
+    display: block;
+    font-weight: bold;
+    color: var(--ink);
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.region-desc {
+    display: block;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+.stack-arrow, .heap-arrow {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 10px;
+    color: var(--accent);
+}
+
+.region-spacer {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.spacer-line {
+    width: 80%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--muted), transparent);
+}
+
+.spacer-label {
+    position: absolute;
+    background: var(--bg);
+    padding: 0 8px;
+    color: var(--muted);
+    font-size: 10px;
+}
+
+/* Stack Frame Diagram */
+.stack-diagram {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.stack-direction {
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.stack-frame {
+    width: 300px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.frame-part {
+    padding: 10px 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.frame-part:hover {
+    background: rgba(73, 247, 194, 0.1);
+    border-left: 4px solid var(--neon);
+}
+
+.frame-part.caller-frame {
+    background: rgba(126, 168, 255, 0.1);
+}
+
+.frame-part.args {
+    background: rgba(255, 211, 110, 0.1);
+}
+
+.frame-part.return-addr {
+    background: rgba(255, 92, 122, 0.15);
+    border-left: 4px solid var(--danger);
+    animation: exploit-target 3s ease-in-out infinite;
+}
+
+@keyframes exploit-target {
+    0%, 100% { box-shadow: inset 0 0 10px rgba(255, 92, 122, 0.3); }
+    50% { box-shadow: inset 0 0 20px rgba(255, 92, 122, 0.5); }
+}
+
+.frame-part.saved-rbp {
+    background: rgba(80, 250, 123, 0.1);
+}
+
+.frame-part.locals {
+    background: rgba(255, 121, 198, 0.1);
+}
+
+.frame-part.temp {
+    background: rgba(189, 147, 249, 0.1);
+}
+
+.frame-label {
+    display: block;
+    font-weight: bold;
+    color: var(--ink);
+    font-size: 13px;
+}
+
+.frame-detail {
+    display: block;
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 2px;
+}
+
+.register-pointer {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--neon);
+    font-weight: bold;
+    font-size: 12px;
+}
+
+/* Register Diagram */
+.register-diagram {
+    display: grid;
+    gap: 20px;
+}
+
+.register-category h4 {
+    color: var(--accent);
+    margin-bottom: 10px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.register-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+}
+
+.register-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.register-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(73, 247, 194, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.register-item:hover::before {
+    left: 100%;
+}
+
+.register-item:hover {
+    background: rgba(73, 247, 194, 0.1);
+    border-color: var(--neon);
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 10px 25px rgba(73, 247, 194, 0.3);
+}
+
+.register-item.rax { border-color: #50fa7b; }
+.register-item.rbx { border-color: #ff79c6; }
+.register-item.rcx { border-color: #ffb86c; }
+.register-item.rdx { border-color: #8be9fd; }
+.register-item.rsi { border-color: #f1fa8c; }
+.register-item.rdi { border-color: #bd93f9; }
+.register-item.rsp { border-color: var(--danger); }
+.register-item.rbp { border-color: var(--warn); }
+
+.reg-name {
+    font-weight: bold;
+    color: var(--neon);
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.reg-desc {
+    color: var(--muted);
+    font-size: 11px;
+    margin-bottom: 6px;
+}
+
+.reg-size {
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: bold;
+}
+
+/* Interactive Elements */
+.memory-tooltip {
+    position: fixed;
+    background: rgba(0, 0, 0, 0.95);
+    color: var(--neon);
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 12px;
+    max-width: 250px;
+    z-index: 10000;
+    border: 1px solid var(--neon);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    animation: tooltip-appear 0.2s ease;
+}
+
+@keyframes tooltip-appear {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Design */
+@media (max-width: 1000px) {
+    .memory-region {
+        width: 200px;
+    }
+    
+    .stack-frame {
+        width: 250px;
+    }
+    
+    .register-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .memory-visualization {
+        padding: 10px;
+    }
+    
+    .memory-region {
+        width: 180px;
+    }
+    
+    .stack-frame {
+        width: 200px;
+    }
+    
+    .register-grid {
+        grid-template-columns: 1fr;
+    }
+}
+

@@ -1,0 +1,82 @@
+/**
+ * View Content Height Fix
+ * Ensures all content is visible without cutting off
+ */
+
+/* Main view content area */
+.view-content {
+    min-height: 650px !important;
+    max-height: none !important;
+    overflow-y: auto !important;
+    padding-bottom: 30px !important;
+}
+
+/* Specific fix for concepts tab */
+.view-content .concepts-container {
+    min-height: 700px !important;
+    max-height: none !important;
+    overflow-y: visible !important;
+}
+
+/* Memory layout specific fixes */
+.memory-layout-fixed {
+    min-height: 450px !important;
+    padding: 25px !important;
+}
+
+.memory-diagram-wide {
+    min-height: 400px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+}
+
+/* Each memory region needs more height */
+.memory-region {
+    min-height: 70px !important;
+    padding: 15px 20px !important;
+}
+
+/* Arrows between regions */
+.memory-arrow {
+    min-height: 30px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Center section that contains tabs */
+#center {
+    min-height: 700px !important;
+}
+
+/* Tab content area */
+#center .view-content {
+    height: calc(100vh - 250px) !important;
+    min-height: 650px !important;
+    max-height: none !important;
+}
+
+/* Ensure concept sections don't get cut off */
+.concept-section {
+    margin-bottom: 35px !important;
+    padding-bottom: 25px !important;
+}
+
+/* Fix for reference grids */
+.reference-grid {
+    margin-bottom: 20px !important;
+}
+
+/* Exploitation concepts need space */
+.exploit-concepts {
+    margin-bottom: 30px !important;
+}
+
+/* Ensure scrollbar appears when needed */
+.concepts-container {
+    position: relative !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    max-height: calc(100vh - 200px) !important;
+}

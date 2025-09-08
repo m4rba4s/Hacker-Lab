@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>🔧 Hacker Lab Diagnostics</title>
+    <style>
+        body {
+            background: #0a0e1a;
+            color: #49f7c2;
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            margin: 0;
+            line-height: 1.6;
+        }
+        h1 {
+            text-shadow: 0 0 20px currentColor;
+            text-align: center;
+        }
+        .test-section {
+            background: rgba(0,0,0,0.5);
+            border: 1px solid #49f7c2;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .test-result {
+            padding: 5px 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+        }
+        .pass {
+            background: rgba(77, 243, 163, 0.2);
+            color: #4df3a3;
+        }
+        .fail {
+            background: rgba(255, 92, 122, 0.2);
+            color: #ff5c7a;
+        }
+        .warn {
+            background: rgba(255, 211, 110, 0.2);
+            color: #ffd36e;
+        }
+        .info {
+            background: rgba(126, 168, 255, 0.2);
+            color: #7ea8ff;
+        }
+        pre {
+            background: #000;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+        button {
+            background: #49f7c2;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #4df3a3;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 HACKER LAB DIAGNOSTICS 🔧</h1>
+    
+    <div class="test-section">
+        <h2>📊 Environment Check</h2>
+        <div id="env-tests"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>📦 Module Loading Test</h2>
+        <div id="module-tests"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>🔍 Console Output</h2>
+        <pre id="console-output"></pre>
+    </div>
+    
+    <div class="test-section">
+        <h2>🚀 Actions</h2>
+        <button onclick="window.location.href='index.html'">Open Main App</button>
+        <button onclick="window.location.href='test_simple.html'">Simple Test</button>
+        <button onclick="window.location.href='run_tests.html'">Run Full Tests</button>
+        <button onclick="location.reload()">Reload Diagnostics</button>
+    </div>
+    
+    <script>
+        // Override console to capture output
+        const consoleOutput = document.getElementById('console-output');
+        const originalLog = console.log;
+        const originalError = console.error;
+        
+        function captureConsole(method, text, isError = false) {
+            method.apply(console, [text]);
+            const line = document.createElement('div');
+            line.style.color = isError ? '#ff5c7a' : '#49f7c2';
+            line.textContent = text;
+            consoleOutput.appendChild(line);
+        }
+        
+        console.log = (...args) => captureConsole(originalLog, args.join(' '));
+        console.error = (...args) => captureConsole(originalError, args.join(' '), true);
+        
+        // Environment tests
+        function runEnvTests() {
+            const envDiv = document.getElementById('env-tests');
+            
+            function addResult(text, status = 'info') {
+                const div = document.createElement('div');
+                div.className = `test-result ${status}`;
+                div.textContent = text;
+                envDiv.appendChild(div);
+            }
+            
+            // Protocol check
+            if (window.location.protocol === 'file:') {
+                addResult('❌ Running from file:// - ES6 modules will NOT work!', 'fail');
+                addResult('➡️ Use http://localhost:8000 instead', 'warn');
+            } else {
+                addResult('✅ Running from ' + window.location.protocol, 'pass');
+            }
+            
+            // Browser check
+            addResult('🌐 Browser: ' + navigator.userAgent.substring(0, 50) + '...', 'info');
+            
+            // ES6 support
+            try {
+                eval('const test = () => {}; `template`; class Test {}');
+                addResult('✅ ES6 syntax supported', 'pass');
+            } catch (e) {
+                addResult('❌ ES6 syntax NOT supported', 'fail');
+            }
+            
+            // Module support
+            if ('noModule' in HTMLScriptElement.prototype) {
+                addResult('✅ ES6 modules supported', 'pass');
+            } else {
+                addResult('❌ ES6 modules NOT supported', 'fail');
+            }
+            
+            // Local storage
+            try {
+                localStorage.setItem('test', '1');
+                localStorage.removeItem('test');
+                addResult('✅ LocalStorage available', 'pass');
+            } catch (e) {
+                addResult('⚠️ LocalStorage not available', 'warn');
+            }
+        }
+        
+        // Module loading tests
+        async function runModuleTests() {
+            const modDiv = document.getElementById('module-tests');
+            
+            function addResult(text, status = 'info') {
+                const div = document.createElement('div');
+                div.className = `test-result ${status}`;
+                div.textContent = text;
+                modDiv.appendChild(div);
+            }
+            
+            // Test loading app.js
+            try {
+                addResult('⏳ Loading app.js...', 'info');
+                const appModule = await import('./assets/js/app.js');
+                addResult('✅ app.js loaded successfully', 'pass');
+                
+                if (window.HackerLabApp) {
+                    addResult('✅ HackerLabApp is available globally', 'pass');
+                    addResult('📋 State: ' + (window.HackerLabApp.state.initialized ? 'Initialized' : 'Not initialized'), 
+                             window.HackerLabApp.state.initialized ? 'pass' : 'warn');
+                } else {
+                    addResult('❌ HackerLabApp NOT found in window', 'fail');
+                }
+            } catch (error) {
+                addResult('❌ Failed to load app.js', 'fail');
+                addResult('Error: ' + error.message, 'fail');
+                console.error(error);
+            }
+            
+            // Test individual modules
+            const modules = [
+                'assets/js/core/state.js',
+                'assets/js/core/simulator.js',
+                'assets/js/ui/terminal.js',
+                'assets/data/lessons.js'
+            ];
+            
+            for (const modulePath of modules) {
+                try {
+                    addResult(`⏳ Loading ${modulePath}...`, 'info');
+                    await import('./' + modulePath);
+                    addResult(`✅ ${modulePath} loaded`, 'pass');
+                } catch (error) {
+                    addResult(`❌ ${modulePath} failed: ${error.message}`, 'fail');
+                }
+            }
+        }
+        
+        // Run all tests
+        console.log('🔧 Starting diagnostics...');
+        runEnvTests();
+        runModuleTests().then(() => {
+            console.log('✅ Diagnostics complete!');
+        }).catch(error => {
+            console.error('❌ Diagnostics failed:', error);
+        });
+        
+        // Global error handler
+        window.addEventListener('error', (e) => {
+            console.error('💀 Global error:', e.message);
+        });
+    </script>
+</body>
+</html>

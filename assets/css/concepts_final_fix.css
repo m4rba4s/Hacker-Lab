@@ -1,0 +1,97 @@
+/**
+ * Final fixes for Concepts tab
+ * 1. Smaller header
+ * 2. Wider memory layout
+ */
+
+/* Make header much smaller */
+.concepts-header {
+    padding: 10px !important;
+    margin-bottom: 15px !important;
+}
+
+.concepts-header h2 {
+    font-size: 16px !important;
+    margin-bottom: 4px !important;
+}
+
+.concepts-header p {
+    font-size: 12px !important;
+    margin: 0 !important;
+    opacity: 0.7;
+}
+
+/* Fix Memory Layout width - make it MUCH wider */
+.memory-layout-fixed {
+    width: 100% !important;
+    max-width: none !important;
+    padding: 15px !important;
+}
+
+.memory-diagram-wide {
+    min-width: 800px !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+/* Make memory regions wider */
+.memory-region {
+    display: grid !important;
+    grid-template-columns: 180px 1fr 250px !important;
+    gap: 30px !important;
+    width: 100% !important;
+    min-width: 700px !important;
+}
+
+/* Ensure the container can scroll horizontally if needed */
+.concept-section {
+    width: 100% !important;
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+}
+
+/* Make the entire view content wider for concepts */
+.view-content {
+    width: 100% !important;
+    max-width: none !important;
+    overflow-x: auto !important;
+}
+
+/* Specific for concepts container */
+.concepts-container {
+    width: 100% !important;
+    max-width: none !important;
+    padding: 15px !important;
+}
+
+/* Region name needs more space */
+.region-name {
+    min-width: 180px !important;
+    font-size: 13px !important;
+}
+
+/* Content column should expand */
+.region-content {
+    min-width: 350px !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+}
+
+/* Address column wider */
+.region-address {
+    min-width: 250px !important;
+    white-space: nowrap !important;
+}
+
+/* If there's a memory visualization, make it wider too */
+#concepts-memory-container {
+    width: 100% !important;
+    min-width: 800px !important;
+}
+
+/* Arrows between memory regions */
+.memory-arrow {
+    width: 100% !important;
+    text-align: center !important;
+}

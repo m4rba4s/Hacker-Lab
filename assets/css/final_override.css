@@ -1,0 +1,383 @@
+/**
+ * 🔥 FINAL OVERRIDE CSS - MAXIMUM PRIORITY 🔥
+ * This file MUST be loaded LAST to override all other styles
+ */
+
+/* ============================================
+   DISASSEMBLY VIEW - FINAL FIX
+   ============================================ */
+
+/* Force container to allow scrolling */
+.view-content {
+    overflow: hidden !important;
+    padding: 0 !important;
+}
+
+/* Container for disassembly with proper scrolling */
+.disasm-container {
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+/* Scrollable content area */
+.disasm-container .disasm-content,
+#disasm-content {
+    flex: 1 !important;
+    overflow-x: auto !important;
+    overflow-y: auto !important;
+    padding: 10px !important;
+    max-height: calc(100vh - 400px) !important;
+}
+
+/* CRITICAL: Override ALL disasm-row styles with maximum specificity */
+body #app .disasm-container .disasm-content .disasm-row,
+body #app .disasm-container #disasm-content .disasm-row,
+body .disasm-row {
+    display: grid !important;
+    /* Fixed column widths to prevent ANY overlap */
+    grid-template-columns: 
+        60px           /* Line number */
+        180px          /* Address (0x0000000000401000) */
+        150px          /* Bytes (48 89 e5) */
+        100px          /* Mnemonic (push, mov, etc) */
+        250px          /* Operands (rbp, [rsp+0x10], etc) */
+        1fr !important;   /* Comments */
+    
+    column-gap: 25px !important;  /* Large gap to prevent overlap */
+    padding: 10px 20px !important;
+    margin: 2px 0 !important;
+    min-width: 1000px !important;  /* Force horizontal scroll */
+    
+    font-family: 'Courier New', monospace !important;
+    font-size: 14px !important;
+    line-height: 1.8 !important;
+    
+    align-items: center !important;
+    white-space: nowrap !important;
+    
+    border-left: 3px solid transparent !important;
+    transition: all 0.2s ease !important;
+}
+
+/* Individual column styles with overflow protection */
+.disasm-row .disasm-line-number {
+    grid-column: 1 !important;
+    color: #8aa2b2 !important;
+    text-align: right !important;
+    padding-right: 10px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+.disasm-row .disasm-addr {
+    grid-column: 2 !important;
+    color: #7ea8ff !important;
+    font-weight: bold !important;
+    font-family: monospace !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+.disasm-row .disasm-bytes {
+    grid-column: 3 !important;
+    color: #8aa2b2 !important;
+    font-family: monospace !important;
+    font-size: 13px !important;
+    letter-spacing: 1px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+.disasm-row .disasm-mnemonic {
+    grid-column: 4 !important;
+    color: #49f7c2 !important;
+    font-weight: bold !important;
+    text-transform: lowercase !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+.disasm-row .disasm-operands {
+    grid-column: 5 !important;
+    color: #e6f1ff !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+.disasm-row .disasm-comment {
+    grid-column: 6 !important;
+    color: #6272a4 !important;
+    font-style: italic !important;
+    font-size: 13px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+/* Hover and active states */
+.disasm-row:hover {
+    background: rgba(126, 168, 255, 0.1) !important;
+    border-left-color: #7ea8ff !important;
+    cursor: pointer !important;
+}
+
+.disasm-row.is-ip {
+    background: rgba(73, 247, 194, 0.15) !important;
+    border-left-color: #49f7c2 !important;
+    box-shadow: 0 0 20px rgba(73, 247, 194, 0.2) !important;
+}
+
+.disasm-row.is-bp {
+    background: rgba(255, 92, 122, 0.15) !important;
+    border-left-color: #ff5c7a !important;
+}
+
+/* ============================================
+   FLOW VIEW - FINAL FIX
+   ============================================ */
+
+#flow-canvas-container {
+    width: 100% !important;
+    height: 600px !important;
+    overflow: auto !important;
+    background: rgba(0, 0, 0, 0.4) !important;
+    border: 1px solid rgba(73, 247, 194, 0.3) !important;
+    border-radius: 8px !important;
+    padding: 20px !important;
+}
+
+#flow-canvas-container svg {
+    min-width: 100% !important;
+    min-height: 100% !important;
+}
+
+/* Flow blocks styling */
+.flow-block {
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+}
+
+.flow-block:hover {
+    filter: brightness(1.2) !important;
+}
+
+.flow-block.active {
+    filter: drop-shadow(0 0 10px #49f7c2) !important;
+}
+
+/* ============================================
+   REGISTERS/STACK PANEL FIX
+   ============================================ */
+
+.reg-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 5px !important;
+}
+
+.reg-item {
+    display: grid !important;
+    grid-template-columns: 60px 1fr !important;
+    gap: 15px !important;
+    padding: 5px 10px !important;
+    font-family: monospace !important;
+    font-size: 13px !important;
+    align-items: center !important;
+}
+
+.reg-item .name {
+    color: #49f7c2 !important;
+    font-weight: bold !important;
+    text-align: left !important;
+}
+
+.reg-item .value {
+    color: #e6f1ff !important;
+    font-family: monospace !important;
+    text-align: left !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+/* ============================================
+   ULTIMATE DESIGN FIXES - PART 1
+   ============================================ */
+
+/* Fix sidebar layouts */
+#sidebar-left, #sidebar-right {
+    background: #0a0e1a !important;
+    border: 1px solid rgba(73, 247, 194, 0.1) !important;
+    overflow-y: auto !important;
+    padding: 10px !important;
+}
+
+#sidebar-left {
+    width: 250px !important;
+    min-width: 250px !important;
+}
+
+#sidebar-right {
+    width: 280px !important;
+    min-width: 280px !important;
+}
+
+/* Fix tabs alignment and spacing */
+.tabs {
+    display: flex !important;
+    gap: 5px !important;
+    padding: 10px !important;
+    background: #1e2936 !important;
+    border-bottom: 2px solid rgba(73, 247, 194, 0.2) !important;
+    overflow-x: auto !important;
+    flex-wrap: nowrap !important;
+}
+
+.tab {
+    padding: 8px 16px !important;
+    min-width: fit-content !important;
+    white-space: nowrap !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    border-radius: 5px 5px 0 0 !important;
+}
+
+/* Fix content areas for all tabs */
+.view-content > div {
+    height: 100% !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+/* Specific tab containers */
+.source-container,
+.hex-container,
+.strings-container,
+.lesson-container,
+.stats-container,
+.concepts-container,
+.syscalls-container,
+.flow-container {
+    padding: 20px !important;
+    height: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Typography and readability */
+pre, code {
+    font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace !important;
+    font-size: 13px !important;
+    line-height: 1.6 !important;
+}
+
+h1, h2, h3, h4, h5 {
+    margin-top: 0 !important;
+    margin-bottom: 15px !important;
+    color: #49f7c2 !important;
+}
+
+p {
+    line-height: 1.6 !important;
+    margin-bottom: 10px !important;
+}
+
+/* Buttons and interactive elements */
+button, .btn {
+    padding: 8px 16px !important;
+    font-size: 13px !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    border: 1px solid #49f7c2 !important;
+    background: rgba(73, 247, 194, 0.1) !important;
+    color: #49f7c2 !important;
+}
+
+button:hover, .btn:hover {
+    background: rgba(73, 247, 194, 0.2) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 2px 8px rgba(73, 247, 194, 0.3) !important;
+}
+
+/* Input fields */
+input[type="text"], textarea {
+    background: #0a0e1a !important;
+    border: 1px solid rgba(73, 247, 194, 0.3) !important;
+    color: #e6f1ff !important;
+    padding: 8px 12px !important;
+    border-radius: 5px !important;
+    font-family: inherit !important;
+}
+
+input[type="text"]:focus, textarea:focus {
+    outline: none !important;
+    border-color: #49f7c2 !important;
+    box-shadow: 0 0 5px rgba(73, 247, 194, 0.3) !important;
+}
+
+/* ============================================
+   HEX VIEW FIX
+   ============================================ */
+
+.hex-row {
+    display: grid !important;
+    grid-template-columns: 120px 1fr 200px !important;
+    gap: 20px !important;
+    padding: 5px 15px !important;
+    font-family: monospace !important;
+    font-size: 13px !important;
+    min-width: 800px !important;
+}
+
+.hex-offset {
+    color: #7ea8ff !important;
+    font-weight: bold !important;
+}
+
+.hex-bytes {
+    color: #e6f1ff !important;
+    letter-spacing: 2px !important;
+}
+
+.hex-ascii {
+    color: #8aa2b2 !important;
+}
+
+/* ============================================
+   GLOBAL IMPROVEMENTS
+   ============================================ */
+
+/* Better scrollbars */
+::-webkit-scrollbar {
+    width: 12px !important;
+    height: 12px !important;
+}
+
+::-webkit-scrollbar-track {
+    background: #0b0f14 !important;
+    border-radius: 6px !important;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #49f7c2 !important;
+    border-radius: 6px !important;
+    border: 2px solid #0b0f14 !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #4df3a3 !important;
+}
+
+/* Ensure monospace fonts everywhere */
+.disasm-container *,
+.hex-container *,
+.reg-grid *,
+.stack-view * {
+    font-family: 'Courier New', 'Consolas', 'Monaco', monospace !important;
+}
+
+/* Debug helper - uncomment to see grid boundaries */
+/*
+.disasm-row > * {
+    border: 1px solid red !important;
+}
+*/
