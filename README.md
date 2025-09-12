@@ -1,6 +1,3 @@
-Here you go — a polished, GitHub-ready README that merges your two writeups into one cohesive document and keeps everything clearly **educational-only**.
-
----
 <img src="https://i.ibb.co/ynfLKF2Q/Screenshot.png" alt="App Screenshot" width="600"/>
 
 # RET Academy 🔥
@@ -282,4 +279,5 @@ Use techniques **responsibly** and only on systems you **own** or have **explici
 **Built with ❤️ for the reverse-engineering & cybersecurity community.**
 Questions, ideas, or issues? Open an issue or PR at:
 **[https://github.com/m4rba4s/RET-Academy](https://github.com/m4rba4s/RET-Academy)**
+
 
