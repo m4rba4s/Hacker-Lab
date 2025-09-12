@@ -1,6 +1,6 @@
 <img src="https://i.ibb.co/ynfLKF2Q/Screenshot.png" alt="App Screenshot" width="600"/>
 
-# RET Academy 🔥
+#  HAXOR LAB 🔥
 
 **Interactive Reverse Engineering & Assembly Learning Platform**
 
@@ -13,7 +13,7 @@ A comprehensive, browser-based platform for learning reverse engineering, assemb
 
 ---
 
-## ✨ Why RET Academy?
+## ✨ Why HAXOR LAB?
 
 * 100% client-side (no backend, no installs)
 * Built for clarity: visualizations, step-through execution, and hands-on challenges
@@ -279,5 +279,6 @@ Use techniques **responsibly** and only on systems you **own** or have **explici
 **Built with ❤️ for the reverse-engineering & cybersecurity community.**
 Questions, ideas, or issues? Open an issue or PR at:
 **[https://github.com/m4rba4s/RET-Academy](https://github.com/m4rba4s/RET-Academy)**
+
 
 
